@@ -1,0 +1,18 @@
+body {
+  overflow-y: overlay; /* 반드시 overlay 처리 */
+}
+
+*::-webkit-scrollbar {
+  width: 7px;
+}
+
+*::-webkit-scrollbar-thumb {
+  outline: none;
+  background-color: hsla(0, 0%, 42%, 0.151);
+  border-radius: 100px;
+}
+
+*::-webkit-scrollbar-track {
+  box-shadow: none;
+  background-color: transparent;
+}
