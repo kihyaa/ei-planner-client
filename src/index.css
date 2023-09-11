@@ -138,6 +138,18 @@ button {
   justify-content: center;
 }
 
+html,
+body,
+#root {
+  height: 100%;
+}
+
+* {
+  box-sizing: border-box; /* 오페라(Opera) */
+  -moz-box-sizing: border-box; /* 파이어폭스(Firefox)*/
+  -webkit-box-sizing: border-box; /* 웹킷(Webkit) & 크롬(Chrome) */
+}
+
 body {
   margin: 0;
   font-family:
@@ -158,16 +170,4 @@ body {
     sans-serif;
   -webkit-font-smoothing: antialiased;
   -moz-osx-font-smoothing: grayscale;
-}
-
-html,
-body,
-#root {
-  height: 100%;
-}
-
-* {
-  box-sizing: border-box; /* 오페라(Opera) */
-  -moz-box-sizing: border-box; /* 파이어폭스(Firefox)*/
-  -webkit-box-sizing: border-box; /* 웹킷(Webkit) & 크롬(Chrome) */
 }
