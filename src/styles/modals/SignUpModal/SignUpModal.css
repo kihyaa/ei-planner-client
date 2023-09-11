@@ -1,3 +1,11 @@
 .modal-signup-height {
   max-height: 698px;
 }
+
+.signup-input-wrapper {
+  margin-bottom: 2.125rem;
+}
+
+.signup-input-hr {
+  height: 0.875rem;
+}
