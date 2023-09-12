@@ -1,0 +1,20 @@
+.modal-support-link-container {
+  color: #414141;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  font-size: 0.875rem;
+  margin-top: 0.75rem;
+}
+
+.modal-support-link-container > button {
+  font-family: inherit;
+  font-size: 0.875rem;
+  margin-left: 0.3rem;
+  font-weight: 500;
+}
+
+.modal-support-link-container > button:hover {
+  color: #1c1c1c;
+}
+ 
