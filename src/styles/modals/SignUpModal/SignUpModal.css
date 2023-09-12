@@ -3,7 +3,11 @@
 }
 
 .signup-input-wrapper {
-  margin-bottom: 2.125rem;
+  margin-bottom: 1.875rem;
+}
+
+.signup-input-wrapper-last {
+  margin-bottom: 2.25rem;
 }
 
 .signup-input-hr {
