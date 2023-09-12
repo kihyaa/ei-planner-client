@@ -1,0 +1,39 @@
+button {
+  font-family: inherit;
+}
+
+.contained {
+  background-color: #383838;
+  color: #ffffff;
+}
+
+.outLine-default {
+  border: 1px solid #383838;
+  color: #383838;
+}
+
+.outLine-warning {
+  border: 1px solid #e74c3c;
+  color: #e74c3c;
+}
+
+.warning {
+  background-color: #e74c3c;
+  color: #ffffff;
+}
+
+.lg {
+  width: 100%;
+  height: 3.8rem;
+  font-size: 1.375rem;
+  border-radius: 6px;
+  font-weight: 700;
+}
+
+.sm {
+  width: 100%;
+  border-radius: 4px;
+  font-size: 0.625rem;
+  height: 1.3125rem;
+  font-weight: 600;
+}
