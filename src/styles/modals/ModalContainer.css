@@ -31,8 +31,7 @@
 .modal-contents {
   width: 100%;
   height: calc(100% - 3.8rem);
-  border: 2px solid red;
-  padding: 0.8rem;
+  padding: 1.375rem;
   overflow-y: auto;
 }
 

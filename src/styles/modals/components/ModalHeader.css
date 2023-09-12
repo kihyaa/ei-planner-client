@@ -1,6 +1,6 @@
 .modal-header-contianer {
   width: 100%;
-  color: #393939;
+  color: #5c5c5c;
   height: 3.8rem;
   display: flex;
   flex-direction: row;
@@ -9,7 +9,7 @@
   font-size: 1.25rem;
   font-weight: 600;
   border-bottom: 1px solid #e2e2e2;
-  padding: 0 0.8rem;
+  padding: 0 1.15rem;
 }
 
 .modal-header-empty {
