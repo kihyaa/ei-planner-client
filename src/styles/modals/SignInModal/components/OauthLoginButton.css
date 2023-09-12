@@ -1,0 +1,21 @@
+.oauth-login-button {
+  width: 100%;
+  height: 3.188rem;
+  font-size: 1rem;
+  border-radius: 6px;
+  font-weight: 500;
+  color: #6f6f6f;
+  border: 1px solid #6f6f6f;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  margin: 0 0 0.625rem 0;
+}
+
+.oauth-login-button:hover {
+  background-color: #f9f9f9;
+}
+
+.oauth-login-button > p {
+  margin-left: 0.875rem;
+}

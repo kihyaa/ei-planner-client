@@ -1,3 +1,38 @@
 .modal-signin-height {
-  max-height: 730px;
+  max-height: 698px;
+}
+
+.signin-input-wrapper {
+  margin-bottom: 2.125rem;
+}
+
+.signin-input-hr {
+  height: 0.875rem;
+}
+
+.signin-input-or-hr {
+  display: flex;
+  align-items: center;
+  margin: 1.563rem 0 1rem 0;
+  justify-content: space-between;
+}
+
+.signin-input-or-hr > div {
+  background-color: #b8b8b8;
+  width: 100%;
+  height: 0.1px;
+}
+
+.signin-input-or-hr > p {
+  font-size: 0.875rem;
+  white-space: nowrap;
+  margin: 0 0.875rem;
+}
+
+.signin-warning {
+  text-align: center;
+  display: block;
+  margin: 0.75rem 0 0 0;
+  font-size: 0.875rem;
+  color: #e74c3c;
 }
