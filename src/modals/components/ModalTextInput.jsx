@@ -1,6 +1,6 @@
 import "../../styles/modals/components/ModalTextInput.css";
 
-const ModalTextInput = ({ type, value, onChange, placeholder, errMsg }) => {
+const ModalTextInput = ({ type, size, value, onChange, placeholder, errMsg }) => {
   return (
     <>
       <input
@@ -8,7 +8,9 @@ const ModalTextInput = ({ type, value, onChange, placeholder, errMsg }) => {
         placeholder={placeholder}
         value={value}
         onChange={onChange}
-        className={`modal-text-input ${errMsg && "modal-text-input-warning-border"}`}
+        className={`modal-text-input ${errMsg && "modal-text-input-warning-border"} ${
+          size === "sm" && "modal-text-input-sm"
+        }`}
       />
       {errMsg && <p className="modal-text-input-warning-msg">{errMsg}</p>}
     </>
