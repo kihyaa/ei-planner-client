@@ -1,3 +1,124 @@
 .modal-edit-height {
   height: 568px;
 }
+
+.modal-edit {
+  height: 100%;
+  padding: 1.9375rem 1.84375rem 1.84375rem 1.625rem;
+  display: flex;
+  flex-direction: column;
+}
+
+.modal-edit-title {
+  display: flex;
+  color: #393939;
+  font-size: 1.75rem;
+  font-weight: 700;
+  justify-content: space-between;
+}
+
+.edit-text {
+  margin-top: 0.125rem;
+}
+
+.modal-edit-title button img {
+  margin-bottom: 0.375rem;
+}
+
+.edit-input-wrapper {
+  margin-top: 1.9375rem;
+  display: flex;
+  flex-direction: column;
+}
+
+.edit-input-hr {
+  height: 0.875rem;
+}
+
+.edit-input-newSchedule input {
+  height: 3.3125rem;
+}
+
+textarea {
+  resize: none;
+  border: 1px solid #cdcdcd;
+  border-radius: 6px;
+  height: 10.25rem;
+  padding: 1rem 0.875rem;
+  width: 100%;
+  outline: none;
+  font-size: 1.13rem;
+  font-family: inherit;
+  font-weight: 400;
+}
+
+textarea::placeholder {
+  color: #aeaeae;
+  font-size: 1.17rem;
+  font-family: inherit;
+  font-weight: 400;
+}
+
+textarea:focus {
+  border: 1px solid rgb(172, 172, 172);
+}
+
+.edit-deadline {
+  margin-top: 1.5rem;
+}
+
+.edit-deadline-input {
+  height: 2.1875rem;
+  margin-bottom: 4.125rem;
+}
+
+.edit-deadline-calender {
+  display: flex;
+  align-items: center;
+  color: #535353;
+  font-weight: 500;
+  font-size: 1rem;
+  height: 1.25rem;
+  margin-bottom: 0.875rem;
+}
+
+.edit-deadline-calender img {
+  margin-right: 0.375rem;
+}
+
+.edit-deadline-date {
+  display: flex;
+  justify-content: space-between;
+  margin-bottom: 4.125rem;
+  height: 2.1875rem;
+}
+
+.deadline-date {
+  border: 1px solid #cdcdcd;
+  background-color: #f8f8f8;
+  height: 100%;
+  width: 17rem;
+  display: flex;
+  align-items: center;
+  padding: 0.6875rem 0.4375rem;
+  border-radius: 6px;
+  font-weight: 600;
+  color: #dcdccd;
+  font-size: 0.75rem;
+}
+
+.deadline-date:hover {
+  cursor: pointer;
+}
+
+.deadline-time {
+  display: flex;
+  align-items: center;
+  font-size: 0.75rem;
+  font-weight: 500;
+  color: #535353;
+}
+
+.deadline-time button {
+  margin-left: 0.6875rem;
+}
