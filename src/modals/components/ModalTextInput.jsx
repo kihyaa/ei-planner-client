@@ -17,4 +17,9 @@ const ModalTextInput = ({ type, size, value, onChange, placeholder, errMsg }) =>
   );
 };
 
+ModalTextInput.defaultProps = {
+  size: "lg",
+  placeholder: "placeholder",
+};
+
 export default ModalTextInput;
