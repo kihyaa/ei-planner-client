@@ -4,7 +4,7 @@
   justify-content: center;
   align-items: center;
   font-size: 0.875rem;
-  margin-top: 0.75rem;
+  margin-top: 1rem;
 }
 
 .modal-support-link-container > button {
@@ -17,4 +17,3 @@
 .modal-support-link-container > button:hover {
   color: #1c1c1c;
 }
- 
