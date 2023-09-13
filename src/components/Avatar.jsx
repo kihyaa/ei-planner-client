@@ -4,7 +4,7 @@ const Avatar = ({ imgSrc, username, dimensions }) => {
   return (
     username && (
       <div className="avatar-container" style={{ width: dimensions, height: dimensions }}>
-        {imgSrc ? (
+        {imgSrc && imgSrc !== " " ? (
           <img src={imgSrc} alt=" " />
         ) : (
           <p>{username.substring(0, /[ㄱ-ㅎ|ㅏ-ㅣ|가-힣]/.test(username[0]) ? 1 : 2)}</p>
