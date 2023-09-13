@@ -12,18 +12,29 @@ button {
 }
 
 .outLine-default {
-  border: 1px solid #383838;
+  border: 0.3px solid #383838;
   color: #383838;
+}
+.outLine-default:hover {
+  background-color: #f9f9f9;
 }
 
 .outLine-warning {
-  border: 1px solid #e74c3c;
+  border: 0.5px solid #e74c3c;
   color: #e74c3c;
+}
+
+.outLine-warning:hover {
+  background-color: #f9f9f9;
 }
 
 .warning {
   background-color: #e74c3c;
   color: #ffffff;
+}
+
+.warning:hover {
+  background-color: #e93b28;
 }
 
 .lg {
