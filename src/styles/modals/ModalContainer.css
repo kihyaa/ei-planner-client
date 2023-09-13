@@ -36,6 +36,26 @@
   overflow-y: auto;
 }
 
+.pending {
+  background-color: #d9d9d9;
+}
+
+.important_urgent {
+  background-color: #fdebec;
+}
+
+.important_not_urgent {
+  background-color: #f6f3f9;
+}
+
+.not_important_urgent {
+  background-color: #e7f3f8;
+}
+
+.not_important_not_urgent {
+  background-color: #edf3ec;
+}
+
 @keyframes fade-in {
   0% {
     opacity: 0;
