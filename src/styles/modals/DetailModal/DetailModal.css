@@ -1,3 +1,132 @@
 .modal-detail-height {
   height: 447px;
 }
+
+.modal-detail {
+  padding: 1.9375rem 1.875rem 1.375rem 1.875rem;
+  height: 100%;
+  position: relative;
+}
+
+.modal-detail-title {
+  display: flex;
+  position: relative;
+  margin-bottom: 1.875rem;
+}
+
+.detail-status {
+  width: 0.25rem;
+  margin-right: 0.4375rem;
+  margin-top: 0.8125rem;
+}
+
+.pending {
+  background-color: #d9d9d9;
+}
+
+.important_urgent {
+  background-color: #fdebec;
+}
+
+.important_not_urgent {
+  background-color: #f6f3f9;
+}
+
+.not_important_urgent {
+  background-color: #e7f3f8;
+}
+
+.not_important_not_urgent {
+  background-color: #edf3ec;
+}
+
+.detail-text {
+  color: #393939;
+  font-weight: 700;
+  font-size: 1.625rem;
+  margin-top: 0.8125rem;
+  width: max-content;
+  max-width: 20rem;
+  word-break: break-all;
+}
+
+.modal-detail-title button img {
+  margin-bottom: 0.9375rem;
+  margin-left: 1.6875rem;
+  position: absolute;
+  top: 0;
+  right: 0;
+}
+
+.detail-information {
+  border-bottom: 0.3px solid #b8b8b8;
+  height: 3.25rem;
+}
+
+.detail-information-item {
+  display: flex;
+  height: 0.875rem;
+  font-size: 0.75rem;
+  font-weight: 500;
+  color: #535353;
+  margin-bottom: 0.625rem;
+}
+
+.item-text {
+  display: flex;
+  align-items: center;
+}
+
+.detail-deadline-date {
+  margin-left: 2.125rem;
+  color: #8a8a8a;
+  display: flex;
+  align-items: center;
+}
+
+.detail-information-item img {
+  height: 0.75rem;
+  margin-right: 0.1875rem;
+}
+
+.detail-status-text {
+  margin-left: 3.625rem;
+  color: #8a8a8a;
+  display: flex;
+  align-items: center;
+}
+
+.detail-content-wrapper {
+  padding: 0.875rem 0px 0px 0.5625rem;
+}
+
+.detail-content {
+  font-weight: 500;
+  color: #646464;
+  font-size: 0.75rem;
+}
+
+.detail-button {
+  display: flex;
+  justify-content: flex-end;
+  position: absolute;
+  right: 1.875rem;
+  bottom: 1.375rem;
+  word-break: break-all;
+}
+
+.detail-button button {
+  width: 3.1875rem;
+  height: 1.3125rem;
+  font-weight: 600;
+  font-size: 0.625rem;
+}
+
+.detail-button .outLine-default {
+  margin-right: 0.4375rem;
+  border: 0.3px solid #383838;
+}
+
+.detail-button .outLine-warning {
+  border: 0.3px solid #ff4242;
+}
