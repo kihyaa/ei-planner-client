@@ -11,12 +11,22 @@ button {
   background-color: #222222;
 }
 
+.contained:disabled {
+  background-color: #cacaca;
+  cursor: default;
+}
+
 .outLine-default {
   border: 0.3px solid #383838;
   color: #383838;
 }
 .outLine-default:hover {
   background-color: #f9f9f9;
+}
+
+.outLine-default:disabled {
+  color: #a5a5a5;
+  cursor: default;
 }
 
 .outLine-warning {
@@ -28,6 +38,11 @@ button {
   background-color: #f9f9f9;
 }
 
+.outLine-warning:disabled {
+  cursor: default;
+  color: #d3675b;
+}
+
 .warning {
   background-color: #e74c3c;
   color: #ffffff;
@@ -35,6 +50,12 @@ button {
 
 .warning:hover {
   background-color: #e93b28;
+}
+
+.warning:disabled {
+  background-color: #e6867b;
+  cursor: default;
+  color: #ffffff;
 }
 
 .lg {

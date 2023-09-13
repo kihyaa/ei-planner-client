@@ -1,10 +1,10 @@
 import "../../styles/modals/components/ModalButton.css";
 
 const ModalButton = (props) => {
-  const { variant, onClick, contents, size } = props;
+  const { variant, onClick, contents, size, disabled } = props;
 
   return (
-    <button className={`${size} ${variant}`} onClick={onClick} type="button">
+    <button disabled={disabled} className={`${size} ${variant} `} onClick={onClick} type="button">
       {contents}
     </button>
   );
@@ -13,6 +13,7 @@ const ModalButton = (props) => {
 ModalButton.defaultProps = {
   variant: "contained",
   size: "lg",
+  isLoading: false,
 };
 
 export default ModalButton;
