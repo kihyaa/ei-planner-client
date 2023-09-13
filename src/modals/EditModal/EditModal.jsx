@@ -11,7 +11,6 @@ import Toggle from "../components/Toggle";
 import CalenderIcon from "../../assets/modals/Calender.svg";
 import "react-datepicker/dist/react-datepicker.css";
 import "../../styles/modals/EditModal/EditModal.css";
-import { parseISO } from "date-fns";
 
 const EditModal = ({ schedule, id }) => {
   const { removeModal } = modalStore();
