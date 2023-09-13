@@ -6,10 +6,12 @@ import ModalWelcomeNotice from "../components/ModalWelcomeNotice";
 import ModalButton from "../components/ModalButton";
 import ModalSupportLink from "../components/ModalSupportLink";
 import modalStore from "../../stores/modalStore";
+import userStore from "../../stores/userStore";
 import "../../styles/modals/SignUpModal/SignUpModal.css";
 
 const SignUpModal = () => {
-  const { setModal, removeModal } = modalStore();
+  const { clearUserData } = userStore();
+  const { setModal } = modalStore();
 
   const [isLoading, setIsLoading] = useState(false);
 
@@ -61,14 +63,16 @@ const SignUpModal = () => {
     }
 
     try {
-      const response = await axios.post(`${process.env.REACT_APP_PROXY}auth/register`, {
+      const res = await axios.post(`${process.env.REACT_APP_PROXY}auth/register`, {
         email,
         nickname,
         password,
       });
-      localStorage.setItem("token", response.data.token);
-      removeModal();
+
+      localStorage.setItem("token", res.data.token);
+      window.location.reload();
     } catch (error) {
+      clearUserData();
       const msg = error.response.data.message;
       if (msg === "EXIST_EMAIL") {
         setEmailErr("중복된 이메일입니다");
