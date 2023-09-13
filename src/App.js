@@ -82,7 +82,7 @@ const App = () => {
       <button
         type="button"
         onClick={() => {
-          setModal(<EditModal />);
+          setModal(<EditModal schedule="edit" id="2" />);
         }}
       >
         작성 폼
