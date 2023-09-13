@@ -1,4 +1,7 @@
+import { useState } from "react";
+import axios from "axios";
 import modalStore from "../../stores/modalStore";
+import userStore from "../../stores/userStore";
 import ModalHeader from "../components/ModalHeader";
 import ModalTextInput from "../components/ModalTextInput";
 import ModalWelcomeNotice from "../components/ModalWelcomeNotice";
@@ -12,18 +15,62 @@ import "../../styles/modals/SignInModal/SignInModal.css";
 
 const SignInModal = () => {
   const { setModal } = modalStore();
+  const { clearUserData } = userStore();
+
+  const [email, setEmail] = useState("");
+  const [password, setPassword] = useState("");
+
+  const [err, setErr] = useState(false);
+  const [isLoading, setIsLoading] = useState(false);
+
+  const handleLogin = async () => {
+    setIsLoading(true);
+    if (email === "" || password === "") {
+      setErr(true);
+      setIsLoading(false);
+      return;
+    }
+    try {
+      const res = await axios.post(`${process.env.REACT_APP_PROXY}auth/login`, {
+        email,
+        password,
+      });
+      localStorage.setItem("token", res.data.token);
+      window.location.reload();
+    } catch (error) {
+      clearUserData();
+      setErr(true);
+      setIsLoading(false);
+    }
+  };
+
   return (
     <div className="modal modal-responsive-height modal-signin-height">
       <ModalHeader title="사용자 로그인" />
       <div className="modal-contents">
         <ModalWelcomeNotice />
         <div className="signin-input-wrapper">
-          <ModalTextInput placeholder="이메일" />
+          <ModalTextInput
+            placeholder="이메일"
+            value={email}
+            onChange={(e) => {
+              setEmail(e.target.value);
+              setErr(false);
+            }}
+          />
           <div className="signin-input-hr" />
-          <ModalTextInput placeholder="닉네임" />
+          <ModalTextInput
+            placeholder="비밀번호"
+            type="password"
+            value={password}
+            onChange={(e) => {
+              setPassword(e.target.value);
+              setErr(false);
+            }}
+          />
         </div>
-        <ModalButton contents="로그인" />
-        {true && <p className="signin-warning">아이디 또는 비밀번호가 일치하지 않습니다</p>}
+        <ModalButton contents="로그인" disabled={isLoading} onClick={() => handleLogin()} />
+        {err && <p className="signin-warning">아이디 또는 비밀번호가 일치하지 않습니다</p>}
         <ModalSupportLink
           infoMsg="계정이 없으신가요?"
           linkMsg="가입하기"
