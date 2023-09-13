@@ -103,12 +103,17 @@ textarea:focus {
   padding: 0.6875rem 0.4375rem;
   border-radius: 6px;
   font-weight: 600;
-  color: #dcdccd;
-  font-size: 0.75rem;
+  color: #464646;
+  font-size: 0.875rem;
 }
 
 .deadline-date:hover {
   cursor: pointer;
+}
+
+.react-datepicker-wrapper,
+.react-datepicker__input-container {
+  height: 100%;
 }
 
 .deadline-time {
