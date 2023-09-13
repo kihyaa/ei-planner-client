@@ -3,8 +3,8 @@
 }
 
 .modal-history {
-  padding: 1.0625rem 0.9375rem 5.625rem 0.9375rem;
-  height: calc(100% - 3.8rem);
+  padding: 1.0625rem 0px 0px 0px;
+  height: calc(100% - 4.5rem);
 }
 
 .history-title {
@@ -13,6 +13,7 @@
   color: #393939;
   font-size: 0.875rem;
   align-items: center;
+  padding: 0px 0.9375rem;
 }
 
 .history-title span {
@@ -27,6 +28,7 @@
 
 .history-wrapper {
   margin-top: 1.1875rem;
-  height: 30.375rem;
+  height: calc(100% - 2.7rem);
+  padding: 0px 0.9375rem;
   overflow-y: auto;
 }
