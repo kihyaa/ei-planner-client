@@ -13,10 +13,16 @@ const HistoryModal = () => {
           <ModalButton variant="outLine-default" size="sm" contents="전체 삭제" />
         </div>
         <div className="history-wrapper">
-          <HistoryInfo />
-          <HistoryInfo />
-          <HistoryInfo />
-          <HistoryInfo />
+          <HistoryInfo situation="important_not_urgent" />
+          <HistoryInfo situation="not_important_urgent" />
+          <HistoryInfo situation="important_urgent" />
+          <HistoryInfo situation="not_important_not_urgent" />
+          <HistoryInfo situation="not_important_urgent" />
+          <HistoryInfo situation="important_urgent" />
+          <HistoryInfo situation="important_urgent" />
+          <HistoryInfo situation="important_not_urgent" />
+          <HistoryInfo situation="not_important_not_urgent" />
+          <HistoryInfo situation="not_important_not_urgent" />
         </div>
       </div>
     </div>
