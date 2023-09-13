@@ -84,7 +84,11 @@ const SignInModal = () => {
           <div />
         </div>
         <OauthLoginButton logoSrc={<img src={GithubIcon} alt="닫기" />} contents="Sign in with Github" />
-        <OauthLoginButton logoSrc={<img src={GoogleIcon} alt="닫기" />} contents="Sign in with Google" />
+        <OauthLoginButton
+          logoSrc={<img src={GoogleIcon} alt="닫기" />}
+          contents="Sign in with Google"
+          onClick={() => window.location.replace(process.env.REACT_APP_OAUTH_GOOGLE)}
+        />
       </div>
     </div>
   );

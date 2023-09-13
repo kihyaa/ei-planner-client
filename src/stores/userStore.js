@@ -22,6 +22,16 @@ const userStore = create((set) => ({
       email: "",
     }));
   },
+  setNickname: (nickname) => {
+    set((_) => ({
+      nickname,
+    }));
+  },
+  setProfileImageUrl: (profileImageUrl) => {
+    set((_) => ({
+      profileImageUrl,
+    }));
+  },
 }));
 
 export default userStore;
