@@ -40,7 +40,7 @@ const DetailModal = ({ id }) => {
   };
 
   const handleCorrection = () => {
-    removeModal(<DetailModal />);
+    removeModal();
     setModal(<EditModal schedule="edit" id={detailInfo.id} />);
   };
 
@@ -52,7 +52,7 @@ const DetailModal = ({ id }) => {
         },
       });
       console.log(res);
-      removeModal(<DetailModal />);
+      removeModal();
     } catch (error) {
       alert("실패했습니다. 다시 시도해 주세요.");
       console.error(error.message);
