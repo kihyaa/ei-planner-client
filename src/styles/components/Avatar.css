@@ -3,7 +3,6 @@
   border-radius: 50px;
   display: flex;
   justify-content: center;
-  font-size: 240%;
   align-items: center;
   color: #25252d;
   font-weight: 500;
@@ -14,4 +13,8 @@
   width: 100%;
   height: 100%;
   object-fit: cover;
+}
+
+.avatar-container > p {
+  font-size: 0.55em;
 }
