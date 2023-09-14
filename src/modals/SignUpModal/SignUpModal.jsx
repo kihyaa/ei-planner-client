@@ -61,6 +61,11 @@ const SignUpModal = () => {
       setIsLoading(false);
       return;
     }
+    if (nickname.trim() === "") {
+      setNicknameErr("닉네임을 입력해 주세요");
+      setIsLoading(false);
+      return;
+    }
 
     try {
       const res = await axios.post(`${process.env.REACT_APP_PROXY}auth/register`, {
@@ -69,7 +74,7 @@ const SignUpModal = () => {
         password,
       });
 
-      localStorage.setItem("token", res.data.token);
+      localStorage.setItem("token", res.data.data.token);
       window.location.reload();
     } catch (error) {
       clearUserData();
@@ -80,6 +85,12 @@ const SignUpModal = () => {
         setNicknameErr("중복된 닉네임입니다");
       }
       setIsLoading(false);
+    }
+  };
+
+  const handleKeyPress = (event) => {
+    if (event.key === "Enter") {
+      handleRegistration();
     }
   };
 
@@ -96,7 +107,9 @@ const SignUpModal = () => {
               setEmail(e.target.value);
               removeErr();
             }}
+            onKeyPress={handleKeyPress}
             errMsg={emailErr}
+            focusMe
           />
           <div className="signup-input-hr" />
           <ModalTextInput
@@ -106,6 +119,7 @@ const SignUpModal = () => {
               setNickname(e.target.value);
               removeErr();
             }}
+            onKeyPress={handleKeyPress}
             errMsg={nicknameErr}
           />
         </div>
@@ -118,6 +132,7 @@ const SignUpModal = () => {
               setPassword(e.target.value);
               removeErr();
             }}
+            onKeyPress={handleKeyPress}
             errMsg={passwordErr}
           />
           <div className="signup-input-hr" />
@@ -129,6 +144,7 @@ const SignUpModal = () => {
               setConfirmPassword(e.target.value);
               removeErr();
             }}
+            onKeyPress={handleKeyPress}
             errMsg={confirmPasswordErr}
           />
         </div>

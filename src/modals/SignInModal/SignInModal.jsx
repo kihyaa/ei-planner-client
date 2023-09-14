@@ -1,4 +1,4 @@
-import { useState } from "react";
+import { useState, useEffect, useRef } from "react";
 import axios from "axios";
 import modalStore from "../../stores/modalStore";
 import userStore from "../../stores/userStore";
@@ -35,12 +35,18 @@ const SignInModal = () => {
         email,
         password,
       });
-      localStorage.setItem("token", res.data.token);
+      localStorage.setItem("token", res.data.data.token);
       window.location.reload();
     } catch (error) {
       clearUserData();
       setErr(true);
       setIsLoading(false);
+    }
+  };
+
+  const handleKeyPress = (event) => {
+    if (event.key === "Enter") {
+      handleLogin();
     }
   };
 
@@ -57,6 +63,8 @@ const SignInModal = () => {
               setEmail(e.target.value);
               setErr(false);
             }}
+            onKeyPress={handleKeyPress} // Call handleLogin on Enter key press
+            focusMe
           />
           <div className="signin-input-hr" />
           <ModalTextInput
@@ -67,6 +75,7 @@ const SignInModal = () => {
               setPassword(e.target.value);
               setErr(false);
             }}
+            onKeyPress={handleKeyPress} // Call handleLogin on Enter key press
           />
         </div>
         <ModalButton contents="로그인" disabled={isLoading} onClick={() => handleLogin()} />
