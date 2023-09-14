@@ -1,6 +1,6 @@
-import React, { useState } from "react";
+import { useState } from "react";
+import DropdownBtn from "../../../assets/DropdownBtn.svg";
 import "../../../styles/modals/SettingModal/components/DropDown.css";
-import DropdownBtn from "../../../assets/modals/DropdownBtn.svg";
 
 const DropDown = ({ value, setValue }) => {
   const [dropOn, setDropOn] = useState(false);
