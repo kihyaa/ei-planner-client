@@ -91,7 +91,7 @@ const App = () => {
       <button
         type="button"
         onClick={() => {
-          setModal(<DetailModal />);
+          setModal(<DetailModal id="4" />);
         }}
       >
         일정 상세
