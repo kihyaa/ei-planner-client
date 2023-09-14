@@ -20,3 +20,7 @@ body {
 button {
   font-family: inherit;
 }
+
+.App {
+  height: 100%;
+}
