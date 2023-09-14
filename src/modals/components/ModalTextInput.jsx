@@ -2,7 +2,7 @@ import { useEffect, useRef } from "react";
 
 import "../../styles/modals/components/ModalTextInput.css";
 
-const ModalTextInput = ({ type, size, value, onChange, placeholder, errMsg, onKeyPress, focusMe }) => {
+const ModalTextInput = ({ type, size, value, onChange, placeholder, errMsg, onKeyPress, focusMe, maxLength }) => {
   const focusRef = useRef(null);
 
   useEffect(() => {
@@ -18,6 +18,7 @@ const ModalTextInput = ({ type, size, value, onChange, placeholder, errMsg, onKe
         placeholder={placeholder}
         value={value}
         onChange={onChange}
+        maxLength={maxLength}
         className={`modal-text-input ${errMsg && "modal-text-input-warning-border"} ${
           size === "sm" && "modal-text-input-sm"
         }`}
