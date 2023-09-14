@@ -1,19 +1,16 @@
-import { useEffect } from "react";
+import { useState, useEffect } from "react";
 import axios from "axios";
 import modalStore from "./stores/modalStore";
 import userStore from "./stores/userStore";
 import ModalContainer from "./modals/ModalContainer";
-import SignInModal from "./modals/SignInModal/SignInModal";
-import SettingModal from "./modals/SettingModal/SettingModal";
-import SignUpModal from "./modals/SignUpModal/SignUpModal";
-import HistoryModal from "./modals/HistoryModal/HistoryModal";
-import DetailModal from "./modals/DetailModal/DetailModal";
-import EditModal from "./modals/EditModal/EditModal";
+import Landing from "./main/Landing";
+import Header from "./components/Header";
 import "./App.css";
 
 const App = () => {
   const { setModal } = modalStore();
   const { isAuthenticated, profileImageUrl, nickname, email, setUserData, clearUserData } = userStore();
+  const [isLoading, setIsLoading] = useState(true);
 
   useEffect(() => {
     const getUserData = async () => {
@@ -29,6 +26,7 @@ const App = () => {
       }
     };
     // 쿼리스트링의 토큰 존재 여부 검사
+    setIsLoading(true);
     const urlSearchParams = new URLSearchParams(window.location.search);
     const token = urlSearchParams.get("token");
 
@@ -38,65 +36,15 @@ const App = () => {
       window.location.search = urlSearchParams.toString();
     } else {
       getUserData();
+      setIsLoading(false);
     }
   }, [localStorage]);
 
   return (
     <div className="App">
       <ModalContainer />
-      <div>
-        {isAuthenticated} {profileImageUrl} {nickname} {email}
-      </div>
-      <button
-        type="button"
-        onClick={() => {
-          setModal(<SignInModal />);
-        }}
-      >
-        로그인
-      </button>
-      <button
-        type="button"
-        onClick={() => {
-          setModal(<SignUpModal />);
-        }}
-      >
-        회원가입
-      </button>
-      <button
-        type="button"
-        onClick={() => {
-          setModal(<SettingModal />);
-        }}
-      >
-        설정
-      </button>
-      <button
-        type="button"
-        onClick={() => {
-          setModal(<HistoryModal />);
-        }}
-      >
-        히스토리
-      </button>
-      <button
-        type="button"
-        onClick={() => {
-          setModal(<EditModal schedule="edit" id="2" />);
-        }}
-      >
-        작성 폼
-      </button>
-
-      <button
-        type="button"
-        onClick={() => {
-          setModal(<DetailModal id="4" />);
-        }}
-      >
-        일정 상세
-      </button>
-      <div>sdfkasldjflksajklfdsjklfjkl</div>
+      <Header />
+      {isLoading ? "" : isAuthenticated ? "계획창" : <Landing />}
     </div>
   );
 };
