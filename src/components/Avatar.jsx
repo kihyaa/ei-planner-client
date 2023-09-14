@@ -3,7 +3,7 @@ import "../styles/components/Avatar.css";
 const Avatar = ({ imgSrc, username, dimensions }) => {
   return (
     username && (
-      <div className="avatar-container" style={{ width: dimensions, height: dimensions }}>
+      <div className="avatar-container" style={{ width: dimensions, height: dimensions, fontSize: dimensions }}>
         {imgSrc && imgSrc !== " " ? (
           <img src={imgSrc} alt=" " />
         ) : (
