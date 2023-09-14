@@ -92,7 +92,11 @@ const SignInModal = () => {
           <p className="">또는</p>
           <div />
         </div>
-        <OauthLoginButton logoSrc={<img src={GithubIcon} alt="닫기" />} contents="Sign in with Github" />
+        <OauthLoginButton
+          logoSrc={<img src={GithubIcon} alt="닫기" />}
+          contents="Sign in with Github"
+          onClick={() => window.location.replace(process.env.REACT_APP_OAUTH_GITHUB)}
+        />
         <OauthLoginButton
           logoSrc={<img src={GoogleIcon} alt="닫기" />}
           contents="Sign in with Google"
