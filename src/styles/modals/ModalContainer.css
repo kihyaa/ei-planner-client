@@ -40,19 +40,19 @@
   background-color: #d9d9d9;
 }
 
-.important_urgent {
+.important_urgent .IMPORTANT_URGENT {
   background-color: #fdebec;
 }
 
-.important_not_urgent {
+.important_not_urgent .IMPORTANT_NOT_URGENT {
   background-color: #f6f3f9;
 }
 
-.not_important_urgent {
+.not_important_urgent .NOT_IMPORTANT_URGENT {
   background-color: #e7f3f8;
 }
 
-.not_important_not_urgent {
+.not_important_not_urgent .NOT_IMPORTANT_NOT_URGENT {
   background-color: #edf3ec;
 }
 
