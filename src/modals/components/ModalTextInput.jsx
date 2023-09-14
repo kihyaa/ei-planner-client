@@ -1,10 +1,20 @@
+import { useEffect, useRef } from "react";
+
 import "../../styles/modals/components/ModalTextInput.css";
 
-const ModalTextInput = ({ type, size, value, onChange, placeholder, errMsg }) => {
+const ModalTextInput = ({ type, size, value, onChange, placeholder, errMsg, onKeyPress, focusMe }) => {
+  const focusRef = useRef(null);
+
+  useEffect(() => {
+    // 모달이 열릴 때 이메일 입력란에 포커스 설정
+    focusMe && focusRef.current && focusRef.current.focus();
+  }, []);
   return (
     <>
       <input
+        ref={focusRef}
         type={type}
+        onKeyPress={onKeyPress}
         placeholder={placeholder}
         value={value}
         onChange={onChange}
@@ -18,6 +28,7 @@ const ModalTextInput = ({ type, size, value, onChange, placeholder, errMsg }) =>
 };
 
 ModalTextInput.defaultProps = {
+  focusMe: false,
   size: "lg",
   placeholder: "placeholder",
 };
