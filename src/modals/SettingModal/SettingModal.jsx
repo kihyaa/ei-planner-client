@@ -12,8 +12,7 @@ import DropDown from "./components/DropDown";
 import "../../styles/modals/SettingModal/SettingModal.css";
 
 const SettingModal = () => {
-  const { isAuthenticated, profileImageUrl, nickname, email, setUserData, clearUserData, setProfileImageUrl } =
-    userStore();
+  const { isAuthenticated, profileImageUrl, nickname, email, setProfileImageUrl } = userStore();
 
   // useState 기본 값으로 설정 정보를 세팅해야함(원래 사용자 설정 상 토글이 켜져 있었는지)
   const [toggleSelected, setToggleSelected] = useState(false);
@@ -107,6 +106,40 @@ const SettingModal = () => {
     }
   };
 
+  const submitProfileImg = async (e) => {
+    if (
+      e.target.files[0].type !== "image/png" &&
+      e.target.files[0].type !== "image/jpeg" &&
+      e.target.files[0].type !== "image/jpg"
+    ) {
+      alert(`해당 파일은 이미지 파일이 아닙니다.\n이미지(JPG,JPEG,PNG)를 업로드 해주세요.`);
+      return;
+    }
+    try {
+      const res = await axios.put(
+        `${process.env.REACT_APP_PROXY}member/profile-image`,
+        {
+          file_name: "img",
+          file_type: e.target.files[0].type,
+        },
+        {
+          headers: {
+            Authorization: `Bearer ${localStorage.getItem("token")}`,
+          },
+        },
+      );
+
+      await axios.put(res.data.presiged_url, e.target.files[0], {
+        headers: {
+          "Content-Type": e.target.files[0].type, // 파일의 MIME 타입 설정
+        },
+      });
+      setProfileImageUrl(res.data.changed_url);
+    } catch (e) {
+      alert(e);
+    }
+  };
+
   return (
     <div className="modal modal-responsive-height modal-setting-height">
       <ModalHeader title="설정" />
@@ -116,7 +149,7 @@ const SettingModal = () => {
             <div className="setting-profile-container">
               <Avatar username={nickname} dimensions="5.563rem" imgSrc={profileImageUrl} />
               <div className="modal-profile-btn-wrapper1">
-                <ModalButton size="sm" contents="프로필 업로드" />
+                <ModalButton size="sm" contents="프로필 업로드" useInput onChange={submitProfileImg} />
               </div>
               <div className="modal-profile-btn-wrapper2">
                 <ModalButton size="sm" variant="outLine-default" contents="이미지 제거" onClick={removeProfileImg} />
