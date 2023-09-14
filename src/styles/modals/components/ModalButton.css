@@ -73,3 +73,13 @@ button {
   height: 1.3125rem;
   font-weight: 500;
 }
+
+.mdoal-button-input {
+  display: none;
+}
+.mdoal-button-label {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  cursor: pointer;
+}
