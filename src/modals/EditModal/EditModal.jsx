@@ -16,8 +16,8 @@ const EditModal = ({ schedule, id }) => {
   const { removeModal } = modalStore();
   const [selected, setSelected] = useState(true);
   const [existingInfo, setExistingInfo] = useState();
-  const [endDate, setEndDate] = useState();
-  const [editTitle, setEditTitle] = useState();
+  const [endDate, setEndDate] = useState(null);
+  const [editTitle, setEditTitle] = useState("");
   const [editDescription, setEditDescription] = useState();
 
   useEffect(() => {
@@ -42,7 +42,7 @@ const EditModal = ({ schedule, id }) => {
         const res = await axios.put(
           `${process.env.REACT_APP_PROXY}tasks/${id} `,
           {
-            title: editTitle,
+            title: editTitle || "제목 없음",
             description: editDescription,
             end_at: endDate,
             is_time_include: selected,
@@ -54,19 +54,20 @@ const EditModal = ({ schedule, id }) => {
           },
         );
         console.log(res);
-        removeModal(<EditModal />);
+        removeModal();
       } catch (error) {
         alert("실패했습니다. 다시 시도해 주세요.");
         console.error(error.message);
       }
     } else {
       try {
+        const koreanTime = endDate === null ? null : new Date(endDate.getTime() + 9 * 60 * 60 * 1000);
         const res = await axios.post(
           `${process.env.REACT_APP_PROXY}tasks `,
           {
-            title: editTitle,
+            title: editTitle || "제목 없음",
             description: editDescription,
-            end_at: endDate,
+            end_at: koreanTime,
             is_time_include: selected,
           },
           {
@@ -76,7 +77,7 @@ const EditModal = ({ schedule, id }) => {
           },
         );
         console.log(res);
-        removeModal(<EditModal />);
+        removeModal();
       } catch (error) {
         alert("실패했습니다. 다시 시도해 주세요.");
         console.error(error.message);
@@ -109,12 +110,15 @@ const EditModal = ({ schedule, id }) => {
         <div className="edit-input-wrapper">
           <div className="edit-input-newSchedule">
             <ModalTextInput
+              focusMe="true"
+              maxLength="10"
               onChange={onTitleChange}
               placeholder={schedule === "registration" ? "새 일정" : existingInfo?.title}
             />
           </div>
           <div className="edit-input-hr" />
           <textarea
+            maxLength="50"
             onChange={onDescriptionChange}
             placeholder={schedule === "registration" ? "설명" : existingInfo?.description}
           />
@@ -134,7 +138,7 @@ const EditModal = ({ schedule, id }) => {
               selected={endDate}
               timeInputLabel="시간 :"
               showTimeInput={selected}
-              dateFormat={selected ? "yyyy. MM. dd h:mm" : "yyyy. MM. dd"}
+              dateFormat={selected ? "yyyy. MM. dd h:mm aa" : "yyyy. MM. dd"}
             />
             <div className="deadline-time">
               시간 포함
