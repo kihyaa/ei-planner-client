@@ -16,6 +16,10 @@ const UserInfoSetting = ({ nickname, email }) => {
       setIsUsernameEdit(false);
       return;
     }
+    if (newNickname.trim() === "") {
+      setErrMsg("닉네임을 입력해 주세요");
+      return;
+    }
     try {
       const res = await axios.put(
         `${process.env.REACT_APP_PROXY}member/nickname?nickname=${encodeURIComponent(newNickname)}`,
