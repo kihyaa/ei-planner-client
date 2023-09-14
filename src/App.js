@@ -8,8 +8,7 @@ import Header from "./components/Header";
 import "./App.css";
 
 const App = () => {
-  const { setModal } = modalStore();
-  const { isAuthenticated, profileImageUrl, nickname, email, setUserData, clearUserData } = userStore();
+  const { isAuthenticated, setUserData, clearUserData } = userStore();
   const [isLoading, setIsLoading] = useState(true);
 
   useEffect(() => {
@@ -21,8 +20,10 @@ const App = () => {
           },
         });
         setUserData(res);
+        setIsLoading(false);
       } catch (error) {
         clearUserData();
+        setIsLoading(false);
       }
     };
     // 쿼리스트링의 토큰 존재 여부 검사
@@ -36,15 +37,14 @@ const App = () => {
       window.location.search = urlSearchParams.toString();
     } else {
       getUserData();
-      setIsLoading(false);
     }
   }, [localStorage]);
 
   return (
     <div className="App">
       <ModalContainer />
-      <Header />
-      {isLoading ? "" : isAuthenticated ? "계획창" : <Landing />}
+      <Header isLoading={isLoading} />
+      {isLoading ? "" : isAuthenticated ? "사용자 페이지" : <Landing />}
     </div>
   );
 };
