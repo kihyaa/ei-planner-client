@@ -5,6 +5,7 @@ import userStore from "./stores/userStore";
 import ModalContainer from "./modals/ModalContainer";
 import Landing from "./main/Landing";
 import Header from "./components/Header";
+import egg from "./utils/egg";
 import "./App.css";
 
 const App = () => {
@@ -38,6 +39,7 @@ const App = () => {
     } else {
       getUserData();
     }
+    egg();
   }, [localStorage]);
 
   return (
