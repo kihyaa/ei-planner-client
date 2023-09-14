@@ -2,6 +2,7 @@ import { useEffect, useState } from "react";
 import DatePicker from "react-datepicker";
 import { ko } from "date-fns/esm/locale";
 import axios from "axios";
+import moment from "moment";
 import modalStore from "../../stores/modalStore";
 import CloseIcon from "../components/CloseIcon";
 import ModalTextInput from "../components/ModalTextInput";
@@ -18,7 +19,7 @@ const EditModal = ({ schedule, id }) => {
   const [existingInfo, setExistingInfo] = useState();
   const [endDate, setEndDate] = useState(null);
   const [editTitle, setEditTitle] = useState("");
-  const [editDescription, setEditDescription] = useState();
+  const [editDescription, setEditDescription] = useState("");
 
   useEffect(() => {
     if (schedule !== "registration") {
@@ -38,13 +39,14 @@ const EditModal = ({ schedule, id }) => {
 
   const onButtonClick = async () => {
     if (schedule !== "registration") {
+      const koreanTime = endDate === null ? existingInfo.end_at : new Date(endDate.getTime() + 9 * 60 * 60 * 1000);
       try {
         const res = await axios.put(
           `${process.env.REACT_APP_PROXY}tasks/${id} `,
           {
             title: editTitle || "제목 없음",
             description: editDescription,
-            end_at: endDate,
+            end_at: koreanTime,
             is_time_include: selected,
           },
           {
@@ -60,8 +62,8 @@ const EditModal = ({ schedule, id }) => {
         console.error(error.message);
       }
     } else {
+      const koreanTime = endDate === null ? null : new Date(endDate.getTime() + 9 * 60 * 60 * 1000);
       try {
-        const koreanTime = endDate === null ? null : new Date(endDate.getTime() + 9 * 60 * 60 * 1000);
         const res = await axios.post(
           `${process.env.REACT_APP_PROXY}tasks `,
           {
@@ -93,6 +95,8 @@ const EditModal = ({ schedule, id }) => {
         },
       });
       setExistingInfo(res.data);
+      setEditTitle(res.data.title);
+      setEditDescription(res.data.description);
       console.log(res);
     } catch (error) {
       alert("실패했습니다. 다시 시도해 주세요.");
@@ -111,16 +115,18 @@ const EditModal = ({ schedule, id }) => {
           <div className="edit-input-newSchedule">
             <ModalTextInput
               focusMe="true"
-              maxLength="10"
+              maxLength="20"
               onChange={onTitleChange}
-              placeholder={schedule === "registration" ? "새 일정" : existingInfo?.title}
+              placeholder="제목 없음"
+              value={editTitle}
             />
           </div>
           <div className="edit-input-hr" />
           <textarea
-            maxLength="50"
+            maxLength="100"
             onChange={onDescriptionChange}
-            placeholder={schedule === "registration" ? "설명" : existingInfo?.description}
+            placeholder={schedule === "registration" ? "설명" : ""}
+            value={editDescription}
           />
         </div>
         <div className="edit-deadline">
@@ -132,13 +138,22 @@ const EditModal = ({ schedule, id }) => {
             <DatePicker
               className="deadline-date"
               locale={ko}
-              placeholderText={schedule === "registration" ? "비어 있음" : existingInfo?.end_at}
-              style={{ placeholderText: { color: "red" } }}
+              placeholderText={
+                schedule === "registration"
+                  ? "비어 있음"
+                  : existingInfo?.end_at
+                  ? new Date(existingInfo?.end_at).getHours() === 0
+                    ? `${moment(existingInfo.end_at).format("YYYY. MM. DD ")}`
+                    : `${moment(existingInfo.end_at).format("YYYY. MM. DD ")}${
+                        new Date(existingInfo.end_at).getHours() >= 12 ? "오후" : "오전"
+                      }${moment(existingInfo.end_at).format(" hh:mm")}`
+                  : "비어 있음"
+              }
               onChange={(date) => setEndDate(date)}
               selected={endDate}
               timeInputLabel="시간 :"
               showTimeInput={selected}
-              dateFormat={selected ? "yyyy. MM. dd h:mm aa" : "yyyy. MM. dd"}
+              dateFormat={selected ? "yyyy. MM. dd aa h:mm" : "yyyy. MM. dd"}
             />
             <div className="deadline-time">
               시간 포함
