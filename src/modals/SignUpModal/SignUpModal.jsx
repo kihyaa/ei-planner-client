@@ -7,11 +7,16 @@ import ModalButton from "../components/ModalButton";
 import ModalSupportLink from "../components/ModalSupportLink";
 import modalStore from "../../stores/modalStore";
 import userStore from "../../stores/userStore";
+import OauthLoginButton from "../components/OauthLoginButton";
+import GithubIcon from "../../assets/oauth/Github.svg";
+import GoogleIcon from "../../assets/oauth/Google.svg";
 import "../../styles/modals/SignUpModal/SignUpModal.css";
 
 const SignUpModal = () => {
   const { clearUserData } = userStore();
   const { setModal } = modalStore();
+
+  const [signUpEmail, setSignUpEmail] = useState(true);
 
   const [isLoading, setIsLoading] = useState(false);
 
@@ -95,61 +100,89 @@ const SignUpModal = () => {
   };
 
   return (
-    <div className="modal modal-responsive-height modal-signup-height">
+    <div className={`modal modal-responsive-height modal-signup-height${signUpEmail ? "" : "-on"}`}>
       <ModalHeader title="사용자 회원가입" />
       <div className="modal-contents">
         <ModalWelcomeNotice />
-        <div className="signup-input-wrapper">
-          <ModalTextInput
-            placeholder="이메일"
-            value={email}
-            onChange={(e) => {
-              setEmail(e.target.value);
-              removeErr();
-            }}
-            onKeyPress={handleKeyPress}
-            errMsg={emailErr}
-            focusMe
-          />
-          <div className="signup-input-hr" />
-          <ModalTextInput
-            placeholder="닉네임"
-            value={nickname}
-            onChange={(e) => {
-              setNickname(e.target.value);
-              removeErr();
-            }}
-            onKeyPress={handleKeyPress}
-            errMsg={nicknameErr}
-          />
-        </div>
-        <div className="signup-input-wrapper-last">
-          <ModalTextInput
-            placeholder="비밀번호"
-            type="password"
-            value={password}
-            onChange={(e) => {
-              setPassword(e.target.value);
-              removeErr();
-            }}
-            onKeyPress={handleKeyPress}
-            errMsg={passwordErr}
-          />
-          <div className="signup-input-hr" />
-          <ModalTextInput
-            placeholder="비밀번호 확인"
-            type="password"
-            value={confirmPassword}
-            onChange={(e) => {
-              setConfirmPassword(e.target.value);
-              removeErr();
-            }}
-            onKeyPress={handleKeyPress}
-            errMsg={confirmPasswordErr}
-          />
-        </div>
-        <ModalButton contents="가입하기" disabled={isLoading} onClick={() => handleRegistration()} />
-        <ModalSupportLink infoMsg="계정이 있나요?" linkMsg="로그인하기" onClick={() => setModal()} />
+        {signUpEmail ? (
+          <>
+            <OauthLoginButton
+              logoSrc={<img src={GithubIcon} alt="닫기" />}
+              contents="Github로 시작하기"
+              onClick={() => window.location.replace(process.env.REACT_APP_OAUTH_GITHUB)}
+            />
+            <OauthLoginButton
+              logoSrc={<img src={GoogleIcon} alt="닫기" />}
+              contents="Google로 시작하기"
+              onClick={() => window.location.replace(process.env.REACT_APP_OAUTH_GOOGLE)}
+            />
+            <div className="signup-input-or-hr">
+              <div />
+              <p className="">또는</p>
+              <div />
+            </div>
+            <ModalButton contents="이메일로 시작하기" onClick={() => setSignUpEmail(false)} />
+          </>
+        ) : (
+          <>
+            <div className="signup-input-wrapper">
+              <ModalTextInput
+                placeholder="이메일"
+                value={email}
+                onChange={(e) => {
+                  setEmail(e.target.value);
+                  removeErr();
+                }}
+                onKeyPress={handleKeyPress}
+                errMsg={emailErr}
+                focusMe
+              />
+              <div className="signup-input-hr" />
+              <ModalTextInput
+                placeholder="닉네임"
+                value={nickname}
+                onChange={(e) => {
+                  setNickname(e.target.value);
+                  removeErr();
+                }}
+                onKeyPress={handleKeyPress}
+                errMsg={nicknameErr}
+              />
+            </div>
+            <div className="signup-input-wrapper-last">
+              <ModalTextInput
+                placeholder="비밀번호"
+                type="password"
+                value={password}
+                onChange={(e) => {
+                  setPassword(e.target.value);
+                  removeErr();
+                }}
+                onKeyPress={handleKeyPress}
+                errMsg={passwordErr}
+              />
+              <div className="signup-input-hr" />
+              <ModalTextInput
+                placeholder="비밀번호 확인"
+                type="password"
+                value={confirmPassword}
+                onChange={(e) => {
+                  setConfirmPassword(e.target.value);
+                  removeErr();
+                }}
+                onKeyPress={handleKeyPress}
+                errMsg={confirmPasswordErr}
+              />
+            </div>
+            <ModalButton contents="가입하기" disabled={isLoading} onClick={() => handleRegistration()} />
+          </>
+        )}
+
+        <ModalSupportLink
+          infoMsg="계정이 있나요?"
+          linkMsg="로그인하기"
+          onClick={() => window.location.replace("/?modal=signin")}
+        />
       </div>
     </div>
   );

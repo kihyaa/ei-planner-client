@@ -8,7 +8,7 @@ import ModalWelcomeNotice from "../components/ModalWelcomeNotice";
 import ModalButton from "../components/ModalButton";
 import ModalSupportLink from "../components/ModalSupportLink";
 import SignUpModal from "../SignUpModal/SignUpModal";
-import OauthLoginButton from "./components/OauthLoginButton";
+import OauthLoginButton from "../components/OauthLoginButton";
 import GithubIcon from "../../assets/oauth/Github.svg";
 import GoogleIcon from "../../assets/oauth/Google.svg";
 import "../../styles/modals/SignInModal/SignInModal.css";

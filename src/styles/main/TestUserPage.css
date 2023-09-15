@@ -1,0 +1,23 @@
+.test-user-container {
+}
+
+.test-user-container > h1 {
+  font-weight: 600;
+  font-size: 32px;
+  margin-bottom: 20px;
+}
+
+.test-user-container > div > h2 {
+  font-weight: 500;
+  font-size: 24px;
+  margin: 15px;
+}
+
+.test-user-container > div > ul > li > button {
+  font-weight: 400;
+  font-size: 16px;
+  margin: 15px;
+  display: inline-block;
+  background-color: black;
+  color: white;
+}

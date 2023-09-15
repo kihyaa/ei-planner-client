@@ -14,6 +14,6 @@ export default function egg() {
   console.log("%c \n >>> https://github.com/kihyaa <<<\n\n", "font-weight: 700");
   console.log(
     `\n%c 🦁 멋사 화이팅 🦁`,
-    "color:#FF7710; font-size:1.5rem; padding:0.5rem; margin: 0 0 1rem 1.4rem; font-family: Pretendard Variable; border: 2px solid #FF7710; border-radius: 4px;font-weight: bold",
+    "color:#FF7710; font-size:1.5rem; padding:0.5rem; margin: 0 0 1rem 1rem; font-family: Pretendard Variable; border: 2px solid #FF7710; border-radius: 4px;font-weight: bold",
   );
 }

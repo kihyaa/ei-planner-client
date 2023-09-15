@@ -1,5 +1,6 @@
 import { useEffect, useState } from "react";
 import axios from "axios";
+import moment from "moment";
 import EditModal from "../EditModal/EditModal";
 import modalStore from "../../stores/modalStore";
 import CloseIcon from "../components/CloseIcon";
@@ -11,14 +12,6 @@ import "../../styles/modals/DetailModal/DetailModal.css";
 const DetailModal = ({ id }) => {
   const { removeModal, setModal } = modalStore();
   const [detailInfo, setDetailInfo] = useState();
-
-  const dateObject = new Date(detailInfo?.end_at);
-  const year = dateObject.getFullYear();
-  const month = String(dateObject.getMonth() + 1).padStart(2, "0");
-  const day = String(dateObject.getDate()).padStart(2, "0");
-  const hours = String(dateObject.getHours()).padStart(2, "0");
-  const minutes = String(dateObject.getMinutes()).padStart(2, "0");
-  const formattedDate = `${year}년 ${month}월 ${day}일 ${hours}시 ${minutes}분`;
 
   useEffect(() => {
     getDetail();
@@ -32,7 +25,6 @@ const DetailModal = ({ id }) => {
         },
       });
       setDetailInfo(res.data);
-      console.log(res);
     } catch (error) {
       alert("실패했습니다. 다시 시도해 주세요.");
       console.error(error.message);
@@ -51,7 +43,6 @@ const DetailModal = ({ id }) => {
           Authorization: `Bearer ${localStorage.getItem("token")}`,
         },
       });
-      console.log(res);
       removeModal();
     } catch (error) {
       alert("실패했습니다. 다시 시도해 주세요.");
@@ -71,7 +62,15 @@ const DetailModal = ({ id }) => {
           <div className="detail-information-item">
             <img src={CalenderIcon} alt="닫기" />
             <div className="item-text">마감 일시</div>
-            <div className="detail-deadline-date">{formattedDate}</div>
+            <div className="detail-deadline-date">
+              {detailInfo?.end_at == null
+                ? "없음"
+                : !detailInfo.is_time_include
+                ? `${moment(detailInfo.end_at).format("YYYY. MM. DD ")}`
+                : `${moment(detailInfo.end_at).format("YYYY. MM. DD ")}${
+                    new Date(detailInfo.end_at).getHours() >= 12 ? "오후" : "오전"
+                  }${moment(detailInfo.end_at).format(" hh:mm")}`}
+            </div>
           </div>
           <div className="detail-information-item">
             <img src={BufferIcon} alt="닫기" />

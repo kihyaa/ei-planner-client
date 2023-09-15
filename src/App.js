@@ -6,10 +6,13 @@ import ModalContainer from "./modals/ModalContainer";
 import Landing from "./main/Landing";
 import Header from "./components/Header";
 import egg from "./utils/egg";
+import TestUserPage from "./main/TestUserPage";
 import "./App.css";
+import SignInModal from "./modals/SignInModal/SignInModal";
 
 const App = () => {
   const { isAuthenticated, setUserData, clearUserData } = userStore();
+  const { setModal } = modalStore();
   const [isLoading, setIsLoading] = useState(true);
 
   useEffect(() => {
@@ -21,6 +24,7 @@ const App = () => {
           },
         });
         setUserData(res);
+        console.log(res);
         setIsLoading(false);
       } catch (error) {
         clearUserData();
@@ -39,6 +43,12 @@ const App = () => {
     } else {
       getUserData();
     }
+
+    if (urlSearchParams.get("modal") === "signin") {
+      setModal(<SignInModal />);
+      const url = window.location.pathname;
+      window.history.replaceState({}, document.title, url);
+    }
     egg();
   }, [localStorage]);
 
@@ -46,7 +56,7 @@ const App = () => {
     <div className="App">
       <ModalContainer />
       <Header isLoading={isLoading} />
-      {isLoading ? "" : isAuthenticated ? "사용자 페이지" : <Landing />}
+      {isLoading ? "" : isAuthenticated ? <TestUserPage /> : <Landing />}
     </div>
   );
 };
