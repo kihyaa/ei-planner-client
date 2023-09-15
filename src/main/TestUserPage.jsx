@@ -64,7 +64,6 @@ const TestUserPage = () => {
   return (
     tasks && (
       <div className="test-user-container" ref={divRef}>
-        <EiBlock />
         <h1>Task Lists</h1>
         <button type="button" onClick={() => cleanTest()}>
           체크한거 삭제
