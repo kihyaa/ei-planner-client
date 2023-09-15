@@ -41,7 +41,7 @@ const EditModal = ({ schedule, id }) => {
     if (schedule !== "registration") {
       const koreanTime = endDate === null ? existingInfo.end_at : new Date(endDate.getTime() + 9 * 60 * 60 * 1000);
       try {
-        const res = await axios.put(
+        await axios.put(
           `${process.env.REACT_APP_PROXY}tasks/${id} `,
           {
             title: editTitle || "제목 없음",
@@ -63,7 +63,7 @@ const EditModal = ({ schedule, id }) => {
     } else {
       const koreanTime = endDate === null ? null : new Date(endDate.getTime() + 9 * 60 * 60 * 1000);
       try {
-        const res = await axios.post(
+        await axios.post(
           `${process.env.REACT_APP_PROXY}tasks `,
           {
             title: editTitle || "제목 없음",
@@ -84,7 +84,6 @@ const EditModal = ({ schedule, id }) => {
       }
     }
   };
-
   const getSchedule = async () => {
     try {
       const res = await axios.get(`${process.env.REACT_APP_PROXY}tasks/${id} `, {
@@ -95,6 +94,7 @@ const EditModal = ({ schedule, id }) => {
       setExistingInfo(res.data);
       setEditTitle(res.data.title);
       setEditDescription(res.data.description);
+      setSelected(res.data.is_time_include);
     } catch (error) {
       alert("실패했습니다. 다시 시도해 주세요.");
       console.error(error.message);
@@ -143,7 +143,7 @@ const EditModal = ({ schedule, id }) => {
                     ? `${moment(existingInfo.end_at).format("YYYY. MM. DD ")}`
                     : `${moment(existingInfo.end_at).format("YYYY. MM. DD ")}${
                         new Date(existingInfo.end_at).getHours() >= 12 ? "오후" : "오전"
-                      }${moment(existingInfo.end_at).format(" hh:mm")}`
+                      } ${selected === true ? moment(existingInfo.end_at).format(" hh:mm") : ""}`
                   : "비어 있음"
               }
               onChange={(date) => setEndDate(date)}
