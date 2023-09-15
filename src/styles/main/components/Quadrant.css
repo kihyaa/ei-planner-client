@@ -1,0 +1,16 @@
+.quadrant{
+  border-radius: 20px;
+  padding : 15px;
+}
+.important_not_urgent{
+  background-color: #F6F3F9;
+}  
+.important_urgent{
+  background-color: #FDEBEC;
+}
+.not_important_not_urgent{
+  background-color: #EDF3EC;
+}
+.not_important_urgent{
+  background-color: #E7F3F8;
+}

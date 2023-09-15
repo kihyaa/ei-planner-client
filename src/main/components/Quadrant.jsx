@@ -1,4 +1,5 @@
 import Droppable from './Droppable';
+import '../../styles/main/components/Quadrant.css';
 
 const Quadrant = ({qudrantId, qudrantItems}) => {
 
