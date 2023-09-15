@@ -1,4 +1,4 @@
-import "../../../styles/modals/SignInModal/components/OauthLoginButton.css";
+import "../../styles/modals/components/OauthLoginButton.css";
 
 const OauthLoginButton = ({ logoSrc, contents, onClick }) => {
   return (
