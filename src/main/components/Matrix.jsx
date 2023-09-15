@@ -1,3 +1,4 @@
+import Quadrant from './Quadrant';
 import '../../styles/main/components/Matrix.css';
 
 const Matrix = ({items}) => {
@@ -7,7 +8,7 @@ const Matrix = ({items}) => {
   return (
     <div className='matrix'>
       {qudrantIds.map((qudrantId,idx)=>
-        'Quadarnt'
+        <Quadrant key={idx} qudrantId = {qudrantId} qudrantItems={items[qudrantId]}/>
       )}
     </div>
   );
