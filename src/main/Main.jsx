@@ -163,12 +163,36 @@ const Main = () => {
             active.id
           );
         }
-
+        const extractTaskIds = extractIdsByCategory(newItems, overContainer);
+        updatePosition(active.id, overContainer, extractTaskIds);
         return newItems;
       });
     }
 
     setActiveId(null);
+  };
+
+  const extractIdsByCategory = (taskArr, eiType) =>{
+    const eiTypeData = taskArr[eiType];
+    const extractIds = eiTypeData.map(items => items.id);
+    return extractIds;
+  }
+
+  const updatePosition = async(taskId, eiType, tasks) =>{
+    try {
+      const res = await axios.put(`${process.env.REACT_APP_PROXY}tasks/${taskId}/move`, {
+        ei_type : eiType,
+        tasks
+      },{
+        headers: {
+          Authorization: `Bearer ${localStorage.getItem("token")}`,
+        },
+      });
+      console.log(res);
+    } catch (error) {
+      alert("위치 갱신 실패. 다시 시도해주세요");
+      console.error(error.message);
+    }
   };
 
   return (
