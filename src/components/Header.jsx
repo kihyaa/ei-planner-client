@@ -1,11 +1,14 @@
-import { useState, useEffect, useRef } from "react";
+import { useState } from "react";
 import headerLogoIcon from "../assets/header/headerLogo.svg";
 import HeaderButton from "./HeaderButton";
 import userStore from "../stores/userStore";
 import modalStore from "../stores/modalStore";
+import refStore from "../stores/refStore";
 import SignInModal from "../modals/SignInModal/SignInModal";
 import EditModal from "../modals/EditModal/EditModal";
 import Avatar from "./Avatar";
+import html2canvas from "html2canvas";
+import saveAs from "file-saver";
 import DropdownBtn from "../assets/DropdownBtn.svg";
 import SettingModal from "../modals/SettingModal/SettingModal";
 import HistoryModal from "../modals/HistoryModal/HistoryModal";
@@ -14,8 +17,25 @@ import "../styles/components/Header.css";
 const Header = ({ isLoading }) => {
   const { isAuthenticated, profileImageUrl, nickname, email } = userStore();
   const { setModal } = modalStore();
+  const { ref } = refStore();
 
   const [dropOn, setDropOn] = useState(false);
+
+  const capture = async () => {
+    if (!ref.current) return;
+
+    try {
+      const div = ref.current;
+      const canvas = await html2canvas(div, { scale: 2 });
+      canvas.toBlob((blob) => {
+        if (blob !== null) {
+          saveAs(blob, `${nickname}.png`);
+        }
+      });
+    } catch (error) {
+      console.error("Error converting div to image:", error);
+    }
+  };
 
   return (
     <div className="header-wrapper">
@@ -51,7 +71,9 @@ const Header = ({ isLoading }) => {
                     >
                       설정
                     </button>
-                    <button type="button">스냅샷 저장</button>
+                    <button type="button" onClick={() => capture()}>
+                      스냅샷 저장
+                    </button>
                     <button
                       type="button"
                       onClick={() => {
