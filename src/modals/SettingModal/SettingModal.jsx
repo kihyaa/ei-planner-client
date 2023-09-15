@@ -12,7 +12,7 @@ import DropDown from "./components/DropDown";
 import "../../styles/modals/SettingModal/SettingModal.css";
 
 const SettingModal = () => {
-  const { isAuthenticated, profileImageUrl, nickname, email, setProfileImageUrl } = userStore();
+  const { isAuthenticated, profileImageUrl, nickname, email, setProfileImageUrl, setIsViewDateTime } = userStore();
 
   // useState 기본 값으로 설정 정보를 세팅해야함(원래 사용자 설정 상 토글이 켜져 있었는지)
   const [toggleSelected, setToggleSelected] = useState(false);
@@ -50,6 +50,7 @@ const SettingModal = () => {
             },
           },
         );
+        setIsViewDateTime(toggleSelected);
       } catch (error) {
         console.log(error);
       }

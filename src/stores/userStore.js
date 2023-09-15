@@ -12,6 +12,7 @@ const userStore = create((set) => ({
       profileImageUrl: res.data.profile_image_url,
       nickname: res.data.nickname,
       email: res.data.email,
+      isViewDateTime: res.data.is_view_date_time,
     }));
   },
   clearUserData: () => {
@@ -30,6 +31,11 @@ const userStore = create((set) => ({
   setProfileImageUrl: (profileImageUrl) => {
     set((_) => ({
       profileImageUrl,
+    }));
+  },
+  setIsViewDateTime: (isViewDateTime) => {
+    set((_) => ({
+      isViewDateTime,
     }));
   },
 }));
