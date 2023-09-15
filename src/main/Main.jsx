@@ -12,6 +12,7 @@ import { sortableKeyboardCoordinates, arrayMove } from "@dnd-kit/sortable";
 import { useTaskStore } from "../stores/taskStore";
 import Todo from "./components/Todo";
 import Matrix from "./components/Matrix";
+import EiBlock from "./components/EiBlock";
 import axios from 'axios';
 import '../styles/main/Main.css';
 
@@ -178,6 +179,9 @@ const Main = () => {
               <>
                 <Todo key="pending" id="pending" items={items} activeId={activeId} />
                 <Matrix items={items} />
+                <DragOverlay>
+                  {activeId ? <EiBlock id={activeId} dragOverlay data={getTaskById(activeId)}/> : null}
+                </DragOverlay>
               </>
             }
           </DndContext>
