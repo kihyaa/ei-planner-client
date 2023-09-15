@@ -11,6 +11,7 @@ import {
 import { sortableKeyboardCoordinates, arrayMove } from "@dnd-kit/sortable";
 import { useTaskStore } from "../stores/taskStore";
 import Todo from "./components/Todo";
+import Matrix from "./components/Matrix";
 import axios from 'axios';
 import '../styles/main/Main.css';
 
@@ -173,9 +174,12 @@ const Main = () => {
             onDragCancel={handleDragCancel}
             onDragOver={handleDragOver}
             onDragEnd={handleDragEnd}>
-              {
-                items && <Todo key="pending" id="pending" items={items} activeId={activeId} />
-              }
+            {items && 
+              <>
+                <Todo key="pending" id="pending" items={items} activeId={activeId} />
+                <Matrix items={items} />
+              </>
+            }
           </DndContext>
         </div>
       </div>
