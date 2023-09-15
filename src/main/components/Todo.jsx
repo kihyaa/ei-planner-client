@@ -1,3 +1,4 @@
+import '../../styles/main/components/Todo.css';
 
 const Todo = ({id, items}) => {
 
