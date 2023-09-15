@@ -7,8 +7,9 @@ import Landing from "./main/Landing";
 import Header from "./components/Header";
 import egg from "./utils/egg";
 import TestUserPage from "./main/TestUserPage";
-import "./App.css";
 import SignInModal from "./modals/SignInModal/SignInModal";
+import Main from "./main/Main";
+import "./App.css";
 
 const App = () => {
   const { isAuthenticated, setUserData, clearUserData } = userStore();
@@ -56,7 +57,7 @@ const App = () => {
     <div className="App">
       <ModalContainer />
       <Header isLoading={isLoading} />
-      {isLoading ? "" : isAuthenticated ? <TestUserPage /> : <Landing />}
+      {isLoading ? "" : isAuthenticated ? <Main/> : <Landing />}
     </div>
   );
 };
