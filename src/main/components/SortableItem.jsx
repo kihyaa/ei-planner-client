@@ -1,5 +1,6 @@
 import { useSortable } from "@dnd-kit/sortable";
 import { CSS } from "@dnd-kit/utilities";
+import EiBlock from "./EiBlock";
 
 const SortableItem = ({ id , item }) => {
 
@@ -20,7 +21,7 @@ const SortableItem = ({ id , item }) => {
 
   return (
     <div style={style} ref={setNodeRef} {...attributes} {...listeners}>
-      EiBlock
+      <EiBlock id={id} data={item}/>
     </div>
   );
 };
