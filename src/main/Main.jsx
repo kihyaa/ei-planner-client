@@ -4,6 +4,7 @@ import {
   DragOverlay,
   KeyboardSensor,
   MouseSensor,
+  PointerSensor,
   TouchSensor,
   useSensor,
   useSensors,
@@ -60,6 +61,11 @@ const Main = () => {
   };
 
   const sensors = useSensors(
+    useSensor(PointerSensor,{
+      activationConstraint:{
+        distance : 2
+      }
+    }),
     useSensor(MouseSensor),
     useSensor(TouchSensor),
     useSensor(KeyboardSensor, {

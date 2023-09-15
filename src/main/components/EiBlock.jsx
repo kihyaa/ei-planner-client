@@ -53,6 +53,7 @@ const EiBlock = ({ data }) => {
 
   const detailEiBlock = (e, id) => {
     e.stopPropagation();
+    console.log('test');
     setModal(<DetailModal id={id} />);
   };
 
