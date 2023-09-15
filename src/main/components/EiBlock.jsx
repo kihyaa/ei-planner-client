@@ -8,13 +8,34 @@ import "../../styles/main/components/EiBlock.css";
 import CheckOff from "../../assets/main/CheckOff.svg";
 import CheckOn from "../../assets/main/CheckOn.svg";
 import EiX from "../../assets/main/EiX.svg";
-import { useStore } from "zustand";
+import useDidMountEffect from "../../hooks/useDidMountEffect";
 
 const EiBlock = ({ data }) => {
   const { setModal } = modalStore();
   const [hide, setHide] = useState(true);
-  const [chk, setChk] = useState(false);
+  const [chk, setChk] = useState(data.is_completed);
   const { isViewDateTime } = userStore();
+
+  useDidMountEffect(() => {
+    putChk();
+  }, [chk]);
+
+  const putChk = async () => {
+    try {
+      const res = await axios.put(
+        `${process.env.REACT_APP_PROXY}tasks/${data.id}/checked`,
+        { is_checked: chk },
+        {
+          headers: {
+            Authorization: `Bearer ${localStorage.getItem("token")}`,
+          },
+        },
+      );
+    } catch (error) {
+      alert("실패했습니다. 다시 시도해 주세요.");
+      console.error(error.message);
+    }
+  };
 
   const deleteEiBlock = async (e, id) => {
     e.stopPropagation();
