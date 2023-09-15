@@ -1,5 +1,6 @@
 import { useDroppable } from "@dnd-kit/core";
 import { SortableContext, verticalListSortingStrategy, rectSortingStrategy } from "@dnd-kit/sortable";
+import '../../styles/main/components/Droppable.css';
 
 /**
  * Droppable 컴포넌트 - Drop 기능이 동작하는 영역입니다.
