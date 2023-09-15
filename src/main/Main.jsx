@@ -10,20 +10,53 @@ import {
 } from "@dnd-kit/core";
 import { sortableKeyboardCoordinates, arrayMove } from "@dnd-kit/sortable";
 import { useTaskStore } from "../stores/taskStore";
+import Todo from "./components/Todo";
+import axios from 'axios';
 import '../styles/main/Main.css';
 
 const Main = () => {
   
-  const { task, getTask, getTaskById } = useTaskStore();
-
+  const { task, setTask, getTaskById } = useTaskStore();
   const [items, setItems] = useState(null);
   const [activeId, setActiveId] = useState(null);
   
   useEffect(()=>{
     getTask();
-    task && setItems(task);
   },[]);
-  
+
+  useEffect(()=>{
+    setItems(task);
+  },[task]);
+
+  const getTask = async () => {
+    try {
+      const res = await axios.get(`${process.env.REACT_APP_PROXY}tasks`, {
+        headers: {
+          Authorization: `Bearer ${localStorage.getItem("token")}`,
+        },
+      });
+
+      const updatedTask = {
+        pending: [],
+        important_urgent: [],
+        important_not_urgent: [],
+        not_important_urgent: [],
+        not_important_not_urgent: [],
+      };
+
+      for (const key in updatedTask) {
+        if (Object.prototype.hasOwnProperty.call(res.data, key)) {
+          updatedTask[key] = res.data[key].tasks;
+        }
+      } 
+      
+      setTask(updatedTask);
+    } catch (error) {
+      alert("실패했습니다. 다시 시도해 주세요.");
+      console.error(error.message);
+    }
+  };
+
   const sensors = useSensors(
     useSensor(MouseSensor),
     useSensor(TouchSensor),
@@ -140,7 +173,9 @@ const Main = () => {
             onDragCancel={handleDragCancel}
             onDragOver={handleDragOver}
             onDragEnd={handleDragEnd}>
-              todo, matrix
+              {
+                items && <Todo key="pending" id="pending" items={items} activeId={activeId} />
+              }
           </DndContext>
         </div>
       </div>
