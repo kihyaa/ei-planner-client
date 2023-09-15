@@ -1,9 +1,10 @@
-import { useState, useEffect } from "react";
+import { useState, useEffect, useRef } from "react";
 import modalStore from "../stores/modalStore";
 import DetailModal from "../modals/DetailModal/DetailModal";
 import axios from "axios";
 import EiBlock from "./components/EiBlock";
 import "../styles/main/TestUserPage.css";
+import refStore from "../stores/refStore";
 
 const TaskList = ({ tasks }) => {
   return (
@@ -17,9 +18,14 @@ const TaskList = ({ tasks }) => {
 
 const TestUserPage = () => {
   const [tasks, setTasks] = useState();
+  const { setRef } = refStore();
+
+  const divRef = useRef(null);
 
   useEffect(() => {
     getTask();
+
+    setRef(divRef);
   }, []);
 
   const cleanTest = async () => {
@@ -57,7 +63,7 @@ const TestUserPage = () => {
 
   return (
     tasks && (
-      <div className="test-user-container">
+      <div className="test-user-container" ref={divRef}>
         <EiBlock />
         <h1>Task Lists</h1>
         <button type="button" onClick={() => cleanTest()}>
