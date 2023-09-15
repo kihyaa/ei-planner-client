@@ -1,5 +1,6 @@
 import { useDroppable } from "@dnd-kit/core";
 import { SortableContext, verticalListSortingStrategy, rectSortingStrategy } from "@dnd-kit/sortable";
+import SortableItem from "./SortableItem";
 import '../../styles/main/components/Droppable.css';
 
 /**
@@ -19,7 +20,7 @@ const Droppable = ({ id, items, layout }) => {
     <SortableContext id={id} items={items} strategy={layout === 'vertical' ? verticalListSortingStrategy : rectSortingStrategy}>
       <div className={layout === 'vertical' ? 'vertical_drop' : 'grid_drop'} ref={setNodeRef}>
         {items.map((item, idx) => (
-          'sortableItem'
+          <SortableItem key={item} id={item.id} item={item}/>
         ))}
       </div>
     </SortableContext>
