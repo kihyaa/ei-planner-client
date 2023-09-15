@@ -1,3 +1,5 @@
+import '../../styles/main/components/Matrix.css';
+
 const Matrix = ({items}) => {
 
   const qudrantIds = ['important_not_urgent', 'important_urgent', 'not_important_not_urgent', 'not_important_urgent'];
