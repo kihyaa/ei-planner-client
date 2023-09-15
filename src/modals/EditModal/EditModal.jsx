@@ -15,7 +15,7 @@ import "../../styles/modals/EditModal/EditModal.css";
 
 const EditModal = ({ schedule, id }) => {
   const { removeModal } = modalStore();
-  const [selected, setSelected] = useState(true);
+  const [selected, setSelected] = useState(false);
   const [existingInfo, setExistingInfo] = useState();
   const [endDate, setEndDate] = useState(null);
   const [editTitle, setEditTitle] = useState("");
@@ -55,7 +55,6 @@ const EditModal = ({ schedule, id }) => {
             },
           },
         );
-        console.log(res);
         removeModal();
       } catch (error) {
         alert("실패했습니다. 다시 시도해 주세요.");
@@ -78,7 +77,6 @@ const EditModal = ({ schedule, id }) => {
             },
           },
         );
-        console.log(res);
         removeModal();
       } catch (error) {
         alert("실패했습니다. 다시 시도해 주세요.");
@@ -97,7 +95,6 @@ const EditModal = ({ schedule, id }) => {
       setExistingInfo(res.data);
       setEditTitle(res.data.title);
       setEditDescription(res.data.description);
-      console.log(res);
     } catch (error) {
       alert("실패했습니다. 다시 시도해 주세요.");
       console.error(error.message);
