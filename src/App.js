@@ -6,9 +6,9 @@ import ModalContainer from "./modals/ModalContainer";
 import Landing from "./main/Landing";
 import Header from "./components/Header";
 import egg from "./utils/egg";
-import TestUserPage from "./main/TestUserPage";
 import SignInModal from "./modals/SignInModal/SignInModal";
 import Main from "./main/Main";
+import { ItemProvider } from "./main/context/ItemContext";
 import "./App.css";
 
 const App = () => {
@@ -55,9 +55,11 @@ const App = () => {
 
   return (
     <div className="App">
-      <ModalContainer />
-      <Header isLoading={isLoading} />
-      {isLoading ? "" : isAuthenticated ? <Main/> : <Landing />}
+      <ItemProvider>
+        <ModalContainer />
+        <Header isLoading={isLoading} />
+        {isLoading ? "" : isAuthenticated ? <Main/>: <Landing />}
+      </ItemProvider>
     </div>
   );
 };
