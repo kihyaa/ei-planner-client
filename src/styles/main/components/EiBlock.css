@@ -38,6 +38,7 @@
   overflow: hidden;
   text-overflow: ellipsis;
   white-space: nowrap;
+  width: 90%;
 }
 
 .ei-block-description {
@@ -48,6 +49,7 @@
   white-space: nowrap;
   overflow: hidden;
   text-overflow: ellipsis;
+  width: 90%;
 }
 
 .ei-block-end_at {
