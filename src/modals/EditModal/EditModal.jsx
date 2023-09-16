@@ -9,6 +9,7 @@ import ModalTextInput from "../components/ModalTextInput";
 import ModalButton from "../components/ModalButton";
 import useDidMountEffect from "../../hooks/useDidMountEffect";
 import Toggle from "../components/Toggle";
+import { useItemContext } from "../../main/context/ItemContext";
 import CalenderIcon from "../../assets/modals/Calender.svg";
 import "react-datepicker/dist/react-datepicker.css";
 import "../../styles/modals/EditModal/EditModal.css";
@@ -20,6 +21,7 @@ const EditModal = ({ schedule, id }) => {
   const [endDate, setEndDate] = useState(null);
   const [editTitle, setEditTitle] = useState("");
   const [editDescription, setEditDescription] = useState("");
+  const { items } = useItemContext();
 
   useEffect(() => {
     if (schedule !== "registration") {
@@ -41,7 +43,7 @@ const EditModal = ({ schedule, id }) => {
     if (schedule !== "registration") {
       const koreanTime = endDate === null ? existingInfo.end_at : new Date(endDate.getTime() + 9 * 60 * 60 * 1000);
       try {
-        await axios.put(
+        const res = await axios.put(
           `${process.env.REACT_APP_PROXY}tasks/${id} `,
           {
             title: editTitle || "제목 없음",
@@ -55,6 +57,16 @@ const EditModal = ({ schedule, id }) => {
             },
           },
         );
+
+        const editEiType = res.data.ei_type.toLowerCase();
+        const itemsOfType = items[editEiType];
+
+        itemsOfType.forEach((item, index) => {
+          if (item.id === res.data.id) {
+            itemsOfType[index] = res.data;
+          }
+        });
+
         removeModal();
       } catch (error) {
         alert("실패했습니다. 다시 시도해 주세요.");
@@ -63,7 +75,7 @@ const EditModal = ({ schedule, id }) => {
     } else {
       const koreanTime = endDate === null ? null : new Date(endDate.getTime() + 9 * 60 * 60 * 1000);
       try {
-        await axios.post(
+        const res = await axios.post(
           `${process.env.REACT_APP_PROXY}tasks `,
           {
             title: editTitle || "제목 없음",
@@ -77,6 +89,9 @@ const EditModal = ({ schedule, id }) => {
             },
           },
         );
+        const addEiType = res.data.ei_type.toLowerCase();
+        items[addEiType].push(res.data);
+
         removeModal();
       } catch (error) {
         alert("실패했습니다. 다시 시도해 주세요.");
