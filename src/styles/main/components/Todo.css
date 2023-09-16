@@ -1,0 +1,73 @@
+.todo{
+  box-sizing: border-box;
+  display: flex;
+  flex-direction: column;
+  width: 300px;
+  padding : 15px 10px;
+  margin-right: 10px;
+  border-radius: 20px;
+  border: 2px solid #E3E5E8;
+  
+  @media (max-width: 1000px) {
+    flex-direction: row;
+    justify-content: space-between;
+    width : 100%;
+    height: 250px;
+  }
+  
+  @media (max-width: 1300px) {
+    width : 270px;
+  }
+}
+
+.todo > h3{
+  margin : 0;
+  padding : 0;
+  color : #5E5E5E;
+  font-size: 1.25rem;
+  @media (max-width: 1000px) {
+    display: none;
+  }
+}
+
+.todo-button{
+  box-sizing: border-box;
+  display: flex;
+  justify-content: space-between;
+  width : calc(100% - 3px);
+  height: 50px;
+
+  @media (max-width: 1000px) {
+    flex-direction: column;
+    width : 10%;
+    height : 100%;
+  }
+}
+.todo-button > button{
+  height: 100%;
+}
+.todo-button > button:nth-child(1){
+  width : 78%;
+  border-radius: 10px;
+  background-color: #FFFFFF;
+  border : 1px solid #6F6F6F;
+  
+  @media (max-width: 1000px) {
+    width : 100%;
+  }
+}
+.todo-button > button:nth-child(2){
+  width : 20%;
+  border : none;
+  border-radius: 10px;
+  background-color: #2D2D2D;
+  color : #FFFFFF;
+
+  @media (max-width: 1000px) {
+    width : 100%;
+  }
+}
+
+::-webkit-scrollbar{
+  width : 2px;
+}
