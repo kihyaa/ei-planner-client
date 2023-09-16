@@ -4,6 +4,7 @@ import axios from "axios";
 import modalStore from "../../stores/modalStore";
 import userStore from "../../stores/userStore";
 import DetailModal from "../../modals/DetailModal/DetailModal";
+import { useItemContext } from "../context/ItemContext";
 import "../../styles/main/components/EiBlock.css";
 import CheckOff from "../../assets/main/CheckOff.svg";
 import CheckOn from "../../assets/main/CheckOn.svg";
@@ -15,6 +16,7 @@ const EiBlock = ({ data }) => {
   const [hide, setHide] = useState(true);
   const [chk, setChk] = useState(data.is_completed);
   const { isViewDateTime } = userStore();
+  const { items, setItems } = useItemContext();
 
   useDidMountEffect(() => {
     putChk();
@@ -45,6 +47,13 @@ const EiBlock = ({ data }) => {
           Authorization: `Bearer ${localStorage.getItem("token")}`,
         },
       });
+
+      const deleteEiType = data.ei_type.toLowerCase();
+      const updatedItems = {
+        ...items,
+        [deleteEiType]: items[deleteEiType].filter(item => item.id !== id),
+      };
+      setItems(updatedItems);
     } catch (error) {
       alert("실패했습니다. 다시 시도해 주세요.");
       console.error(error.message);

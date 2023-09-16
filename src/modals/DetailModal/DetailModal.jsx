@@ -5,6 +5,7 @@ import EditModal from "../EditModal/EditModal";
 import modalStore from "../../stores/modalStore";
 import CloseIcon from "../components/CloseIcon";
 import ModalButton from "../components/ModalButton";
+import { useItemContext } from "../../main/context/ItemContext";
 import CalenderIcon from "../../assets/modals/Calender.svg";
 import BufferIcon from "../../assets/modals/Buffer.svg";
 import "../../styles/modals/DetailModal/DetailModal.css";
@@ -12,6 +13,7 @@ import "../../styles/modals/DetailModal/DetailModal.css";
 const DetailModal = ({ id }) => {
   const { removeModal, setModal } = modalStore();
   const [detailInfo, setDetailInfo] = useState();
+  const { items, setItems } = useItemContext();
 
   useEffect(() => {
     getDetail();
@@ -43,6 +45,14 @@ const DetailModal = ({ id }) => {
           Authorization: `Bearer ${localStorage.getItem("token")}`,
         },
       });
+
+      const deleteEiType = detailInfo.ei_type.toLowerCase();
+      const updatedItems = {
+        ...items,
+        [deleteEiType]: items[deleteEiType].filter(item => item.id !== id),
+      };
+      setItems(updatedItems);
+
       removeModal();
     } catch (error) {
       alert("실패했습니다. 다시 시도해 주세요.");
