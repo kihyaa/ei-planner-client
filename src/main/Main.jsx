@@ -1,4 +1,4 @@
-import { useState, useEffect } from "react";
+import { useState, useRef, useEffect } from "react";
 import {
   DndContext,
   DragOverlay,
@@ -14,22 +14,26 @@ import { useTaskStore } from "../stores/taskStore";
 import Todo from "./components/Todo";
 import Matrix from "./components/Matrix";
 import EiBlock from "./components/EiBlock";
-import axios from 'axios';
-import '../styles/main/Main.css';
+import axios from "axios";
+import refStore from "../stores/refStore";
+
+import "../styles/main/Main.css";
 
 const Main = () => {
-  
   const { task, setTask, getTaskById } = useTaskStore();
   const [items, setItems] = useState(null);
   const [activeId, setActiveId] = useState(null);
-  
-  useEffect(()=>{
-    getTask();
-  },[]);
+  const divRef = useRef(null);
+  const { setRef } = refStore();
 
-  useEffect(()=>{
+  useEffect(() => {
+    getTask();
+    setRef(divRef);
+  }, []);
+
+  useEffect(() => {
     setItems(task);
-  },[task]);
+  }, [task]);
 
   const getTask = async () => {
     try {
@@ -51,8 +55,8 @@ const Main = () => {
         if (Object.prototype.hasOwnProperty.call(res.data, key)) {
           updatedTask[key] = res.data[key].tasks;
         }
-      } 
-      
+      }
+
       setTask(updatedTask);
     } catch (error) {
       alert("실패했습니다. 다시 시도해 주세요.");
@@ -61,16 +65,16 @@ const Main = () => {
   };
 
   const sensors = useSensors(
-    useSensor(PointerSensor,{
-      activationConstraint:{
-        distance : 2
-      }
+    useSensor(PointerSensor, {
+      activationConstraint: {
+        distance: 2,
+      },
     }),
     useSensor(MouseSensor),
     useSensor(TouchSensor),
     useSensor(KeyboardSensor, {
       coordinateGetter: sortableKeyboardCoordinates,
-    })
+    }),
   );
 
   const handleDragStart = ({ active }) => {
@@ -81,14 +85,7 @@ const Main = () => {
     setActiveId(null);
   };
 
-  const moveBetweenContainers = (
-    items,
-    activeContainer,
-    activeIndex,
-    overContainer,
-    overIndex,
-    item
-  ) => {
+  const moveBetweenContainers = (items, activeContainer, activeIndex, overContainer, overIndex, item) => {
     const tempItems = JSON.parse(JSON.stringify(items));
     const [targetItem] = tempItems[activeContainer].splice(activeIndex, 1);
     tempItems[overContainer].splice(overIndex, 0, targetItem);
@@ -110,19 +107,9 @@ const Main = () => {
       setItems((items) => {
         const activeIndex = active.data.current.sortable.index;
 
-        const overIndex =
-          over.id in items
-            ? items[overContainer].length + 1
-            : over.data.current.sortable.index;
+        const overIndex = over.id in items ? items[overContainer].length + 1 : over.data.current.sortable.index;
 
-        return moveBetweenContainers(
-          items,
-          activeContainer,
-          activeIndex,
-          overContainer,
-          overIndex,
-          active.id
-        );
+        return moveBetweenContainers(items, activeContainer, activeIndex, overContainer, overIndex, active.id);
       });
     }
   };
@@ -137,34 +124,20 @@ const Main = () => {
       const activeContainer = active.data.current.sortable.containerId;
       const overContainer = over.data.current?.sortable.containerId || over.id;
       const activeIndex = active.data.current.sortable.index;
-      const overIndex =
-        over.id in items
-          ? items[overContainer].length + 1
-          : over.data.current.sortable.index;
+      const overIndex = over.id in items ? items[overContainer].length + 1 : over.data.current.sortable.index;
 
       setItems((items) => {
         let newItems;
         if (activeContainer === overContainer) {
           newItems = {
             ...items,
-            [overContainer]: arrayMove(
-              items[overContainer],
-              activeIndex,
-              overIndex
-            ),
+            [overContainer]: arrayMove(items[overContainer], activeIndex, overIndex),
           };
         } else {
-          newItems = moveBetweenContainers(
-            items,
-            activeContainer,
-            activeIndex,
-            overContainer,
-            overIndex,
-            active.id
-          );
+          newItems = moveBetweenContainers(items, activeContainer, activeIndex, overContainer, overIndex, active.id);
         }
         const extractTaskIds = extractIdsByCategory(newItems, overContainer);
-        updatePosition(active.id, overContainer, extractTaskIds);
+        updatePosition(active.id, overContainer.toUpperCase(), extractTaskIds);
         return newItems;
       });
     }
@@ -172,22 +145,26 @@ const Main = () => {
     setActiveId(null);
   };
 
-  const extractIdsByCategory = (taskArr, eiType) =>{
+  const extractIdsByCategory = (taskArr, eiType) => {
     const eiTypeData = taskArr[eiType];
-    const extractIds = eiTypeData.map(items => items.id);
+    const extractIds = eiTypeData.map((items) => items.id);
     return extractIds;
-  }
+  };
 
-  const updatePosition = async(taskId, eiType, tasks) =>{
+  const updatePosition = async (taskId, eiType, tasks) => {
     try {
-      const res = await axios.put(`${process.env.REACT_APP_PROXY}tasks/${taskId}/move`, {
-        ei_type : eiType,
-        tasks
-      },{
-        headers: {
-          Authorization: `Bearer ${localStorage.getItem("token")}`,
+      const res = await axios.put(
+        `${process.env.REACT_APP_PROXY}tasks/${taskId}/move`,
+        {
+          ei_type: eiType,
+          tasks,
         },
-      });
+        {
+          headers: {
+            Authorization: `Bearer ${localStorage.getItem("token")}`,
+          },
+        },
+      );
       console.log(res);
     } catch (error) {
       alert("위치 갱신 실패. 다시 시도해주세요");
@@ -196,24 +173,25 @@ const Main = () => {
   };
 
   return (
-    <div className='content-layout'>
-      <div className='content-layout-container'>
+    <div className="content-layout" ref={divRef}>
+      <div className="content-layout-container">
         <div className="content">
           <DndContext
             sensors={sensors}
             onDragStart={handleDragStart}
             onDragCancel={handleDragCancel}
             onDragOver={handleDragOver}
-            onDragEnd={handleDragEnd}>
-            {items && 
+            onDragEnd={handleDragEnd}
+          >
+            {items && (
               <>
                 <Todo key="pending" id="pending" items={items} activeId={activeId} />
                 <Matrix items={items} />
                 <DragOverlay>
-                  {activeId ? <EiBlock id={activeId} dragOverlay data={getTaskById(activeId)}/> : null}
+                  {activeId ? <EiBlock id={activeId} dragOverlay data={getTaskById(activeId)} /> : null}
                 </DragOverlay>
               </>
-            }
+            )}
           </DndContext>
         </div>
       </div>
