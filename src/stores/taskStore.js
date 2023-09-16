@@ -1,4 +1,4 @@
-import { create } from 'zustand';
+import { create } from "zustand";
 
 export const useTaskStore = create((set, get) => ({
   task: null,

@@ -1,24 +1,30 @@
-.vertical_drop{
+.vertical_drop {
   box-sizing: border-box;
   display: flex;
   flex-direction: column;
   align-items: center;
   flex-grow: 1;
-  margin: 15px 0;
-  padding : 10px;
+  margin: 15px 0 10px 0;
+  padding: 10px;
   overflow-x: hidden;
   overflow-y: scroll;
-  border-top : 1px solid #DFDFDF;
-  border-bottom : 1px solid #DFDFDF;
+  border-top: 0.5px solid #dfdfdf;
+  border-bottom: 0.5px solid #dfdfdf;
 
-  @media (max-width: 1000px) {
+  @media (max-width: 1100px) {
     display: flex;
     flex-direction: row;
     align-items: center;
     overflow-x: scroll;
     overflow-y: hidden;
-    border : 1px solid black;
+    border: 1px solid black;
+    padding: 5px;
+    margin: 0;
   }
+}
+
+.vertical_drop > div {
+  width: 100%;
 }
 
 .grid_drop {
@@ -30,17 +36,16 @@
   padding: 10px;
   overflow-x: hidden;
   overflow-y: scroll;
-  border : 1px solid black;
-  border-radius: 5px;
-
+  border-radius: 6px;
+  grid-auto-rows: 8.188rem;
   /* 이후 비율 수정 */
   @media (min-width: 700px) {
+    grid-template-columns: repeat(2, 1fr);
+  }
+  @media (min-width: 1100px) and (max-width: 1300px) {
     grid-template-columns: repeat(3, 1fr);
   }
-  @media (min-width: 1001px) and (max-width: 1300px) {
-    grid-template-columns: repeat(4, 1fr);
-  }
-  @media (min-width: 1300px){
-    grid-template-columns: repeat(5, 1fr);
+  @media (min-width: 1300px) {
+    grid-template-columns: repeat(3, 1fr);
   }
 }
