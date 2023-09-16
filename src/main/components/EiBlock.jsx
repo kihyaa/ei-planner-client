@@ -103,7 +103,13 @@ const EiBlock = ({ data }) => {
       return <p className="ei-block-end_at">{data.is_time_include && formatTime(data.end_at)}</p>;
     }
 
-    if (dataDate === ("어제" || "오늘" || "모레" || "그저께" || "내일")) {
+    if (
+      dataDate === "어제" ||
+      dataDate === "오늘" ||
+      dataDate === "모레" ||
+      dataDate === "그저께" ||
+      dataDate === "내일"
+    ) {
       return (
         <>
           <p className="ei-block-end_at">{data.end_at === null ? "" : formatDate(data.end_at)}</p>
