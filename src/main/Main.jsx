@@ -28,8 +28,8 @@ const Main = () => {
   const divRef = useRef(null);
   const { setRef } = refStore();
   const [blockPos, setBlockPos] = useState(null);
-  
-  useEffect(()=>{
+
+  useEffect(() => {
     getTask();
     setRef(divRef);
   }, []);
@@ -145,9 +145,9 @@ const Main = () => {
         updatePosition(active.id, overContainer.toUpperCase(), extractTaskIds);
         return newItems;
       });
-    } else{
+    } else {
       const endContainer = active.data.current.sortable.containerId;
-      if(blockPos !== endContainer){
+      if (blockPos !== endContainer) {
         const newItems = active.data.current.sortable.items;
         updatePosition(active.id, endContainer.toUpperCase(), newItems);
       }
@@ -174,8 +174,8 @@ const Main = () => {
           headers: {
             Authorization: `Bearer ${localStorage.getItem("token")}`,
           },
-
-      });
+        },
+      );
     } catch (error) {
       alert("위치 갱신 실패. 다시 시도해주세요");
       console.error(error.message);
@@ -192,8 +192,9 @@ const Main = () => {
             onDragCancel={handleDragCancel}
             onDragOver={handleDragOver}
             onDragEnd={handleDragEnd}
-            collisionDetection={pointerWithin}>
-            {items && 
+            collisionDetection={pointerWithin}
+          >
+            {items && (
               <>
                 <Todo key="pending" id="pending" items={items} activeId={activeId} />
                 <Matrix items={items} />
