@@ -1,11 +1,13 @@
-import axios from 'axios';
-import Droppable from './Droppable';
-import modalStore from '../../stores/modalStore';
-import EditModal from '../../modals/EditModal/EditModal';
-import '../../styles/main/components/Todo.css';
+import axios from "axios";
+import Droppable from "./Droppable";
+import modalStore from "../../stores/modalStore";
+import EditModal from "../../modals/EditModal/EditModal";
+import AddButton from "./AddButton";
+import plusIcon from "../../assets/main/plus.svg";
+import trashIcon from "../../assets/main/trash.svg";
+import "../../styles/main/components/Todo.css";
 
-const Todo = ({id, items}) => {
-
+const Todo = ({ id, items }) => {
   const droppalbeId = id;
   const todoItems = items[droppalbeId];
   const { setModal } = modalStore();
@@ -28,12 +30,17 @@ const Todo = ({id, items}) => {
   };
 
   return (
-    <div className='todo'>
+    <div className="todo">
       <h3>일정 블록</h3>
-        <Droppable id={droppalbeId} items={todoItems} layout='vertical'/>
-      <div className='todo-button'>
-        <button type="button" onClick={() => setModal(<EditModal schedule="registration" />)}>+</button>
-        <button type="button" onClick={() => cleanTask()}>🗑️</button>
+      <Droppable id={droppalbeId} items={todoItems} layout="vertical" />
+      <div className="todo-button">
+        <AddButton variant="outLine-default" onClick={() => setModal(<EditModal schedule="registration" />)}>
+          <p>일정 추가하기</p>
+          <img src={plusIcon} alt="추가" />
+        </AddButton>
+        <AddButton variant="contained" onClick={() => cleanTask()}>
+          <img src={trashIcon} alt="제거" />
+        </AddButton>
       </div>
     </div>
   );
