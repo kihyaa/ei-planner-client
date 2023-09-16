@@ -11,7 +11,7 @@ const Quadrant = ({ qudrantId, qudrantItems, hideInfoMsg }) => {
   return (
     <div className={`quadrant ${qudrantId}`}>
       <Droppable id={qudrantId} items={qudrantItems} />
-      <p style={{ display: hideInfoMsg && "none" }}>{dict[qudrantId]}</p>
+      <p>{dict[qudrantId]}</p>
     </div>
   );
 };
