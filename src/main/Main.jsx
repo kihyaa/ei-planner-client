@@ -6,6 +6,7 @@ import {
   MouseSensor,
   PointerSensor,
   TouchSensor,
+  pointerWithin,
   useSensor,
   useSensors,
 } from "@dnd-kit/core";
@@ -23,10 +24,12 @@ const Main = () => {
   const { task, setTask, getTaskById } = useTaskStore();
   const [items, setItems] = useState(null);
   const [activeId, setActiveId] = useState(null);
+
   const divRef = useRef(null);
   const { setRef } = refStore();
-
-  useEffect(() => {
+  const [blockPos, setBlockPos] = useState(null);
+  
+  useEffect(()=>{
     getTask();
     setRef(divRef);
   }, []);
@@ -78,7 +81,9 @@ const Main = () => {
   );
 
   const handleDragStart = ({ active }) => {
+    const startContainer = active.data.current.sortable.containerId;
     setActiveId(active.id);
+    setBlockPos(startContainer);
   };
 
   const handleDragCancel = () => {
@@ -140,6 +145,12 @@ const Main = () => {
         updatePosition(active.id, overContainer.toUpperCase(), extractTaskIds);
         return newItems;
       });
+    } else{
+      const endContainer = active.data.current.sortable.containerId;
+      if(blockPos !== endContainer){
+        const newItems = active.data.current.sortable.items;
+        updatePosition(active.id, endContainer.toUpperCase(), newItems);
+      }
     }
 
     setActiveId(null);
@@ -163,9 +174,8 @@ const Main = () => {
           headers: {
             Authorization: `Bearer ${localStorage.getItem("token")}`,
           },
-        },
-      );
-      console.log(res);
+
+      });
     } catch (error) {
       alert("위치 갱신 실패. 다시 시도해주세요");
       console.error(error.message);
@@ -182,8 +192,8 @@ const Main = () => {
             onDragCancel={handleDragCancel}
             onDragOver={handleDragOver}
             onDragEnd={handleDragEnd}
-          >
-            {items && (
+            collisionDetection={pointerWithin}>
+            {items && 
               <>
                 <Todo key="pending" id="pending" items={items} activeId={activeId} />
                 <Matrix items={items} />
