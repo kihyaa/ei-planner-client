@@ -127,7 +127,7 @@ const EditModal = ({ schedule, id }) => {
           <div className="edit-input-newSchedule">
             <ModalTextInput
               focusMe="true"
-              maxLength="20"
+              maxLength="10"
               onChange={onTitleChange}
               placeholder="제목 없음"
               value={editTitle}
