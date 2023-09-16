@@ -1,4 +1,4 @@
-import { useState } from "react";
+import { useEffect, useState } from "react";
 import moment from "moment";
 import axios from "axios";
 import modalStore from "../../stores/modalStore";
@@ -9,24 +9,23 @@ import "../../styles/main/components/EiBlock.css";
 import CheckOff from "../../assets/main/CheckOff.svg";
 import CheckOn from "../../assets/main/CheckOn.svg";
 import EiX from "../../assets/main/EiX.svg";
-import useDidMountEffect from "../../hooks/useDidMountEffect";
 
 const EiBlock = ({ data }) => {
   const { setModal } = modalStore();
   const [hide, setHide] = useState(true);
-  const [chk, setChk] = useState(data.is_completed);
   const { isViewDateTime } = userStore();
   const { items, setItems } = useItemContext();
+  const [isChecked, setIsChecked] = useState(false);
 
-  useDidMountEffect(() => {
-    putChk();
-  }, [chk]);
+  useEffect(() => {
+    setIsChecked(getChecked());
+  }, [isChecked]);
 
   const putChk = async () => {
     try {
       const res = await axios.put(
         `${process.env.REACT_APP_PROXY}tasks/${data.id}/checked`,
-        { is_checked: chk },
+        { is_checked: !isChecked },
         {
           headers: {
             Authorization: `Bearer ${localStorage.getItem("token")}`,
@@ -51,7 +50,7 @@ const EiBlock = ({ data }) => {
       const deleteEiType = data.ei_type.toLowerCase();
       const updatedItems = {
         ...items,
-        [deleteEiType]: items[deleteEiType].filter(item => item.id !== id),
+        [deleteEiType]: items[deleteEiType].filter((item) => item.id !== id),
       };
       setItems(updatedItems);
     } catch (error) {
@@ -62,8 +61,15 @@ const EiBlock = ({ data }) => {
 
   const detailEiBlock = (e, id) => {
     e.stopPropagation();
-    console.log('test');
+    console.log("test");
     setModal(<DetailModal id={id} />);
+  };
+
+  const getChecked = () => {
+    const checkEiType = data.ei_type.toLowerCase();
+    const [targetItem] = items[checkEiType].filter((item) => item.id === data.id);
+    if(!targetItem) return false;
+    return targetItem.is_completed;
   };
 
   return (
@@ -109,10 +115,26 @@ const EiBlock = ({ data }) => {
             type="button"
             onClick={(e) => {
               e.stopPropagation();
-              setChk(!chk);
+              putChk();
+              const checkEiType = data.ei_type.toLowerCase();
+              const updatedItems = {
+                ...items,
+                [checkEiType]: items[checkEiType].map((item) => {
+                  if (item.id === data.id) {
+                    return {
+                      ...item,
+                      is_completed: !item.is_completed,
+                    };
+                  }
+                  return item;
+                }),
+              };
+              console.log(updatedItems);
+              setIsChecked(prev => !prev);
+              setItems(updatedItems);
             }}
           >
-            <img src={chk ? CheckOn : CheckOff} alt="check" />
+            <img src={isChecked ? CheckOn : CheckOff} alt="check" />
           </button>
         </div>
       </div>
