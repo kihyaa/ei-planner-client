@@ -1,7 +1,7 @@
 import { useDroppable } from "@dnd-kit/core";
 import { SortableContext, verticalListSortingStrategy, rectSortingStrategy } from "@dnd-kit/sortable";
 import SortableItem from "./SortableItem";
-import '../../styles/main/components/Droppable.css';
+import "../../styles/main/components/Droppable.css";
 
 /**
  * Droppable 컴포넌트 - Drop 기능이 동작하는 영역입니다.
@@ -13,14 +13,17 @@ import '../../styles/main/components/Droppable.css';
  * @returns {JSX.Element} - Droppable 컴포넌트 JSX 요소
  */
 const Droppable = ({ id, items, layout }) => {
-
   const { setNodeRef } = useDroppable({ id });
 
   return (
-    <SortableContext id={id} items={items} strategy={layout === 'vertical' ? verticalListSortingStrategy : rectSortingStrategy}>
-      <div className={layout === 'vertical' ? 'vertical_drop' : 'grid_drop'} ref={setNodeRef}>
+    <SortableContext
+      id={id}
+      items={items}
+      strategy={layout === "vertical" ? verticalListSortingStrategy : rectSortingStrategy}
+    >
+      <div className={layout === "vertical" ? "vertical_drop" : "grid_drop"} ref={setNodeRef}>
         {items.map((item, idx) => (
-          <SortableItem key={item} id={item.id} item={item}/>
+          <SortableItem key={item} id={item.id} item={item} />
         ))}
       </div>
     </SortableContext>

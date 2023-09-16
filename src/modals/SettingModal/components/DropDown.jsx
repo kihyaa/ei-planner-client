@@ -6,9 +6,11 @@ const DropDown = ({ value, setValue }) => {
   const [dropOn, setDropOn] = useState(false);
   const menu = {
     0: "안함",
-    1: "1 일",
-    3: "3 일",
-    5: "5 일",
+    1: "1시간",
+    3: "3시간",
+    5: "5시간",
+    24: "1일",
+    72: "3일",
   };
 
   const toggleDropdown = () => {
