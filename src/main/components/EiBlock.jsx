@@ -1,5 +1,7 @@
 import { useState } from "react";
 import moment from "moment";
+import { format, isYesterday, isTomorrow, isToday, subDays, addDays } from "date-fns";
+import { ko } from "date-fns/locale";
 import axios from "axios";
 import modalStore from "../../stores/modalStore";
 import userStore from "../../stores/userStore";
@@ -22,7 +24,7 @@ const EiBlock = ({ data }) => {
 
   const putChk = async () => {
     try {
-      const res = await axios.put(
+      await axios.put(
         `${process.env.REACT_APP_PROXY}tasks/${data.id}/checked`,
         { is_checked: chk },
         {
@@ -53,8 +55,79 @@ const EiBlock = ({ data }) => {
 
   const detailEiBlock = (e, id) => {
     e.stopPropagation();
-    console.log("test");
     setModal(<DetailModal id={id} />);
+  };
+
+  const formatDate = (date) => {
+    const endDate = new Date(date);
+    const relativeDate = isYesterday(endDate)
+      ? "어제"
+      : isTomorrow(endDate)
+      ? "내일"
+      : isToday(endDate)
+      ? "오늘"
+      : isToday(subDays(endDate, 2))
+      ? "모레"
+      : isToday(addDays(endDate, 2))
+      ? "그저께"
+      : format(endDate, "yyyy. MM. dd", { locale: ko });
+
+    return relativeDate;
+  };
+
+  const formatTime = (time) => {
+    const currentTime = new Date().getHours();
+    const endHour = new Date(time).getHours();
+    const currentDay = new Date().getDate();
+    const endDay = new Date(time).getDate();
+
+    const relativeHour =
+      endDay === currentDay
+        ? endHour === currentTime + 1
+          ? "1시간 전"
+          : endHour === currentTime + 2
+          ? "2시간 전"
+          : endHour === currentTime + 3
+          ? "3시간 전"
+          : `${new Date(time).getHours() >= 12 ? "오후" : "오전"}  ${moment(time).format(" hh:mm")}`
+        : `${new Date(time).getHours() >= 12 ? "오후" : "오전"}  ${moment(time).format(" hh:mm")}`;
+
+    return relativeHour;
+  };
+
+  const formatEndAt = (data) => {
+    const dataTime = data.is_time_include && formatTime(data.end_at);
+    const dataDate = data.end_at === null ? "" : formatDate(data.end_at);
+
+    if (dataDate === "오늘" && (dataTime === "1시간 전" || dataTime === "2시간 전" || dataTime === "3시간 전")) {
+      return <p className="ei-block-end_at">{data.is_time_include && formatTime(data.end_at)}</p>;
+    }
+
+    if (
+      dataDate === "어제" ||
+      dataDate === "오늘" ||
+      dataDate === "모레" ||
+      dataDate === "그저께" ||
+      dataDate === "내일"
+    ) {
+      return (
+        <>
+          <p className="ei-block-end_at">{data.end_at === null ? "" : formatDate(data.end_at)}</p>
+          {dataDate === "오늘" ? (
+            <p className="ei-block-end_at">{data.is_time_include && formatTime(data.end_at)}</p>
+          ) : (
+            ""
+          )}
+        </>
+      );
+    }
+
+    return (
+      <>
+        <p className="ei-block-end_at">{data.end_at === null ? "" : formatDate(data.end_at)}</p>
+        <p className="ei-block-end_at">{data.is_time_include && formatTime(data.end_at)}</p>
+      </>
+    );
   };
 
   return (
@@ -74,19 +147,7 @@ const EiBlock = ({ data }) => {
         <div className="ei-block-info">
           <h2 className="ei-block-title">{data.title}</h2>
           <p className="ei-block-description">{data.description}</p>
-          {isViewDateTime && (
-            <>
-              <p className="ei-block-end_at">
-                {data.end_at == null ? "" : `${moment(data.end_at).format("YYYY. MM. DD ")}`}
-              </p>
-              <p className="ei-block-end_at">
-                {data.is_time_include &&
-                  `${new Date(data.end_at).getHours() >= 12 ? "오후" : "오전"}  ${moment(data.end_at).format(
-                    " hh:mm",
-                  )}`}
-              </p>
-            </>
-          )}
+          {isViewDateTime && <>{formatEndAt(data)}</>}
         </div>
         <div className="ei-block-Icon">
           {hide ? (
