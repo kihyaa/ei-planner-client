@@ -78,14 +78,18 @@ const EiBlock = ({ data }) => {
   const formatTime = (time) => {
     const currentTime = new Date().getHours();
     const endHour = new Date(time).getHours();
+    const currentDay = new Date().getDate();
+    const endDay = new Date(time).getDate();
 
     const relativeHour =
-      endHour === currentTime + 1
-        ? "1시간 전"
-        : endHour === currentTime + 2
-        ? "2시간 전"
-        : endHour === currentTime + 3
-        ? "3시간 전"
+      endDay === currentDay
+        ? endHour === currentTime + 1
+          ? "1시간 전"
+          : endHour === currentTime + 2
+          ? "2시간 전"
+          : endHour === currentTime + 3
+          ? "3시간 전"
+          : `${new Date(time).getHours() >= 12 ? "오후" : "오전"}  ${moment(time).format(" hh:mm")}`
         : `${new Date(time).getHours() >= 12 ? "오후" : "오전"}  ${moment(time).format(" hh:mm")}`;
 
     return relativeHour;
@@ -99,15 +103,23 @@ const EiBlock = ({ data }) => {
       return <p className="ei-block-end_at">{data.is_time_include && formatTime(data.end_at)}</p>;
     }
 
+    if (dataDate === ("어제" || "오늘" || "모레" || "그저께" || "내일")) {
+      return (
+        <>
+          <p className="ei-block-end_at">{data.end_at === null ? "" : formatDate(data.end_at)}</p>
+          {dataDate === "오늘" ? (
+            <p className="ei-block-end_at">{data.is_time_include && formatTime(data.end_at)}</p>
+          ) : (
+            ""
+          )}
+        </>
+      );
+    }
+
     return (
       <>
         <p className="ei-block-end_at">{data.end_at === null ? "" : formatDate(data.end_at)}</p>
-
-        {dataDate === "오늘" ? (
-          <p className="ei-block-end_at">{data.is_time_include && formatTime(data.end_at)}</p>
-        ) : (
-          ""
-        )}
+        <p className="ei-block-end_at">{data.is_time_include && formatTime(data.end_at)}</p>
       </>
     );
   };
