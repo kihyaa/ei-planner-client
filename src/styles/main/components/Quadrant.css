@@ -1,16 +1,17 @@
-.quadrant{
-  border-radius: 20px;
-  padding : 15px;
+.quadrant {
+  border-radius: 8px;
+  padding: 5px;
+  max-height: calc((100vh - 6rem) / 2);
 }
-.important_not_urgent{
-  background-color: #F6F3F9;
-}  
-.important_urgent{
-  background-color: #FDEBEC;
+.important_not_urgent {
+  background-color: #f6f3f9;
 }
-.not_important_not_urgent{
-  background-color: #EDF3EC;
+.important_urgent {
+  background-color: #fdebec;
 }
-.not_important_urgent{
-  background-color: #E7F3F8;
+.not_important_not_urgent {
+  background-color: #edf3ec;
+}
+.not_important_urgent {
+  background-color: #e7f3f8;
 }
