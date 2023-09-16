@@ -15,13 +15,14 @@ import { useTaskStore } from "../stores/taskStore";
 import Todo from "./components/Todo";
 import Matrix from "./components/Matrix";
 import EiBlock from "./components/EiBlock";
+import { useItemContext } from "./context/ItemContext";
 import axios from 'axios';
 import '../styles/main/Main.css';
 
 const Main = () => {
   
   const { task, setTask, getTaskById } = useTaskStore();
-  const [items, setItems] = useState(null);
+  const { items, setItems } = useItemContext();
   const [activeId, setActiveId] = useState(null);
   const [blockPos, setBlockPos] = useState(null);
   
