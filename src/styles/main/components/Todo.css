@@ -9,10 +9,14 @@
   box-shadow:
     rgba(0, 0, 0, 0.02) 0px 1px 3px 0px,
     rgba(27, 31, 35, 0.15) 0px 0px 0px 1px;
+  @media (max-width: 1100px) {
+    margin-top: 10px;
+  }
 }
 
 .todo > h3 {
-  margin: 0 0 0 0.2 rem;
+  display: inline-block;
+  margin: 0.4rem 0 0.2rem 0.2rem;
   padding: 0;
   color: #5e5e5e;
   font-weight: 600;
@@ -32,19 +36,35 @@
 
   @media (max-width: 1100px) {
     flex-direction: column;
-    width: 10%;
+    border-left: 1px solid #ededed;
+    width: 6rem;
     height: 100%;
+    justify-content: space-around;
+    padding-left: 2px;
   }
 }
+
 .todo-button > button:nth-child(1) {
   width: 78%;
 
-  /* @media (max-width: 1000px) {
-    width: 100%;
-  } */
+  @media (max-width: 1100px) {
+    margin: 0 10px;
+    height: 40%;
+  }
 }
+.todo-button > button:nth-child(1) > p {
+  @media (max-width: 1100px) {
+    display: none;
+  }
+}
+
 .todo-button > button:nth-child(2) {
   width: 20%;
+  @media (max-width: 1100px) {
+    margin: 0 10px;
+    width: 80%;
+    height: 40%;
+  }
 }
 
 ::-webkit-scrollbar {
@@ -56,11 +76,11 @@
     flex-direction: row;
     justify-content: space-between;
     width: 100%;
-    height: 120px;
+    height: 12rem;
   }
 }
 
-@media (max-width: 1300px) {
+@media (max-width: 1300px) and (min-width: 1100px) {
   .todo {
     width: 320px;
   }
