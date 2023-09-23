@@ -25,7 +25,6 @@ const App = () => {
           },
         });
         setUserData(res);
-        console.log(res);
         setIsLoading(false);
       } catch (error) {
         clearUserData();
