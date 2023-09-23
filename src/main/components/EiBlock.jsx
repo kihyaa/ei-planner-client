@@ -17,17 +17,12 @@ const EiBlock = ({ data }) => {
   const [hide, setHide] = useState(true);
   const { isViewDateTime } = userStore();
   const { items, setItems } = useItemContext();
-  const [isChecked, setIsChecked] = useState(false);
-
-  useEffect(() => {
-    setIsChecked(getChecked());
-  }, [isChecked]);
 
   const putChk = async () => {
     try {
       await axios.put(
         `${process.env.REACT_APP_PROXY}tasks/${data.id}/checked`,
-        { is_checked: !isChecked },
+        { is_checked: !data.is_completed },
         {
           headers: {
             Authorization: `Bearer ${localStorage.getItem("token")}`,
@@ -66,13 +61,6 @@ const EiBlock = ({ data }) => {
     console.log("test");
     setModal(<DetailModal id={id} />);
   };
-
-  const getChecked = () => {
-    const checkEiType = data.ei_type.toLowerCase();
-    const [targetItem] = items[checkEiType].filter((item) => item.id === data.id);
-    if(!targetItem) return false;
-    return targetItem.is_completed;
-  }
 
   const formatDate = (date) => {
     const endDate = new Date(date);
@@ -191,12 +179,10 @@ const EiBlock = ({ data }) => {
                   return item;
                 }),
               };
-              console.log(updatedItems);
-              setIsChecked(prev => !prev);
               setItems(updatedItems);
             }}
           >
-            <img src={isChecked ? CheckOn : CheckOff} alt="check" />
+            <img src={data.is_completed ? CheckOn : CheckOff} alt="check" />
           </button>
         </div>
       </div>

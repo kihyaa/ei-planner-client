@@ -94,7 +94,9 @@ const Main = () => {
 
   const moveBetweenContainers = (items, activeContainer, activeIndex, overContainer, overIndex, item) => {
     const tempItems = JSON.parse(JSON.stringify(items));
+
     const [targetItem] = tempItems[activeContainer].splice(activeIndex, 1);
+    targetItem.ei_type = overContainer;
     tempItems[overContainer].splice(overIndex, 0, targetItem);
 
     return tempItems;
@@ -154,7 +156,6 @@ const Main = () => {
         updatePosition(active.id, endContainer.toUpperCase(), newItems);
       }
     }
-
     setActiveId(null);
   };
 
@@ -198,7 +199,7 @@ const Main = () => {
           >
             {items && (
               <>
-                <Todo key="pending" id="pending" items={items} activeId={activeId} />
+                <Todo key="pending" id="pending" activeId={activeId} />
                 <Matrix items={items} />
                 <DragOverlay>
                   {activeId ? <EiBlock id={activeId} dragOverlay data={getTaskById(activeId)} /> : null}
