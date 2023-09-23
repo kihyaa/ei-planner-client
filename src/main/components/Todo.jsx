@@ -5,9 +5,11 @@ import EditModal from "../../modals/EditModal/EditModal";
 import AddButton from "./AddButton";
 import plusIcon from "../../assets/main/plus.svg";
 import trashIcon from "../../assets/main/trash.svg";
+import { useItemContext } from "../context/ItemContext";
 import "../../styles/main/components/Todo.css";
 
-const Todo = ({ id, items }) => {
+const Todo = ({ id }) => {
+  const { items, setItems } = useItemContext();
   const droppalbeId = id;
   const todoItems = items[droppalbeId];
   const { setModal } = modalStore();
@@ -23,6 +25,15 @@ const Todo = ({ id, items }) => {
           },
         },
       );
+
+      const updatedItems = {};
+      for (const key in items) {
+        if (Object.prototype.hasOwnProperty.call(items, key)) {
+          updatedItems[key] = items[key].filter((item) => !item.is_completed);
+        }
+      }
+
+      setItems(updatedItems);
     } catch (error) {
       alert("실패했습니다. 다시 시도해 주세요.");
       console.error(error.message);
