@@ -185,6 +185,20 @@ const Main = () => {
     }
   };
 
+  const getEiBlockById = () =>{
+    if (items) {
+      for (const key in items) {
+        if (Object.prototype.hasOwnProperty.call(items, key)) {
+          const item = items[key].find((item) => item.id === activeId);
+          if (item) {
+            return item;
+          }
+        }
+      }
+    }
+    return null;
+  }
+
   return (
     <div className="content-layout" ref={divRef}>
       <div className="content-layout-container">
@@ -202,7 +216,7 @@ const Main = () => {
                 <Todo key="pending" id="pending" activeId={activeId} />
                 <Matrix items={items} />
                 <DragOverlay>
-                  {activeId ? <EiBlock id={activeId} dragOverlay data={getTaskById(activeId)} /> : null}
+                  {activeId ? <EiBlock id={activeId} dragOverlay data={getEiBlockById()} /> : null}
                 </DragOverlay>
               </>
             )}
